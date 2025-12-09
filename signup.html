@@ -4,7 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up</title>
-    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef1f6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 400px;
+            background: white;
+            margin: 40px auto;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 15px;
+            background: #2f7bff;
+            border: none;
+            font-size: 18px;
+            color: white;
+            margin-top: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 15px;
+        }
+
+        .login-text a {
+            text-decoration: none;
+            color: #2f7bff;
+            font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
@@ -12,17 +68,30 @@
     <div class="container">
         <h2>Sign Up</h2>
 
-        <input type="text" placeholder="Full Name">
-        <input type="email" placeholder="Email">
-        <input type="password" placeholder="Password">
-        <input type="password" placeholder="Confirm Password">
+        <!-- Phone Number -->
+        <input type="tel" id="phone" placeholder="Phone Number" required>
 
-        <button>Sign Up</button>
+        <!-- Email -->
+        <input type="email" id="email" placeholder="Email" required>
 
-        <div class="link">
-            <p>Already have an account? <a href="index.html">Login</a></p>
+        <!-- Password -->
+        <input type="password" id="password" placeholder="Password" required>
+
+        <!-- Confirm Password -->
+        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+
+        <button onclick="signUp()">Sign Up</button>
+
+        <div class="login-text">
+            Already have an account? <a href="login.html">Login</a>
         </div>
     </div>
+
+    <script>
+        function signUp() {
+            alert("Sign up successful! (সব ডেটা এখনো লোকাল — পরে ডাটাবেস লাগাবে)");
+        }
+    </script>
 
 </body>
 </html>
