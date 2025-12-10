@@ -1,20 +1,27 @@
-function login() {
-    let phone = document.getElementById("phone").value;
-    let password = document.getElementById("password").value;
+document.addEventListener("DOMContentLoaded", function () {
+    const loginForm = document.getElementById("loginForm");
 
-    let storedUser = localStorage.getItem("user");
+    loginForm.addEventListener("submit", function (e) {
+        e.preventDefault(); // Stop page refresh
 
-    if (!storedUser) {
-        alert("No user found! Please sign up first.");
-        return;
-    }
+        let phone = document.getElementById("phone").value;
+        let password = document.getElementById("password").value;
 
-    let user = JSON.parse(storedUser);
+        // Check localStorage for stored user
+        let storedUser = localStorage.getItem("user");
 
-    if (phone === user.phone && password === user.password) {
-        alert("Login Successful!");
-        window.location.href = "dashboard.html";
-    } else {
-        alert("Incorrect Phone or Password!");
-    }
-}
+        if (!storedUser) {
+            alert("No user found! Please sign up first.");
+            return;
+        }
+
+        let user = JSON.parse(storedUser);
+
+        if (phone === user.phone && password === user.password) {
+            alert("Login Successful!");
+            window.location.href = "dashboard.html";   // Redirect working
+        } else {
+            alert("Incorrect Phone or Password!");
+        }
+    });
+});
