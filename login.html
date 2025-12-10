@@ -6,42 +6,25 @@
     <title>Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
     <div class="container">
         <h2>Login</h2>
 
-        <input type="text" id="phone" placeholder="Phone Number">
-        <input type="password" id="password" placeholder="Password">
+        <form id="loginForm">
 
-        <button onclick="login()">Login</button>
+            <input type="text" id="phone" placeholder="Phone Number" required>
+            <input type="password" id="password" placeholder="Password" required>
+
+            <button type="submit">Login</button>
+
+        </form>
 
         <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
     </div>
 
-    <script>
-        function login() {
-            let phone = document.getElementById("phone").value;
-            let password = document.getElementById("password").value;
-
-            let storedUser = localStorage.getItem("user");
-
-            if (!storedUser) {
-                alert("No user found! Please sign up first.");
-                return;
-            }
-
-            let user = JSON.parse(storedUser);
-
-            if (phone === user.phone && password === user.password) {
-                alert("Login Successful!");
-                // FIXED REDIRECT
-                window.location.href = "/dashboard.html";
-            } else {
-                alert("Incorrect Phone or Password!");
-            }
-        }
-    </script>
+    <script src="login.js"></script>
 
 </body>
 </html>
