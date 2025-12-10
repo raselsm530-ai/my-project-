@@ -1,73 +1,56 @@
-/* Basic reset */
-* {
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: Arial, sans-serif;
-}
-
-/* Body design */
-body {
-    background: linear-gradient(to right, #4A90E2, #50C9C3);
+    background: linear-gradient(120deg, #3a7bd5, #3aeca5);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-/* Main box */
-.container {
-    width: 350px;
-    background: #fff;
+.box {
+    width: 90%;
+    max-width: 350px;
+    background: white;
     padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.2);
     text-align: center;
+    border-radius: 12px;
+    box-shadow: 0px 0px 12px rgba(0,0,0,0.2);
 }
 
-/* Heading */
-.container h2 {
-    margin-bottom: 20px;
-    color: #333;
+.box h2 {
+    margin-bottom: 15px;
 }
 
-/* Input design */
-.container input {
+.box input {
     width: 100%;
     padding: 12px;
     margin: 8px 0;
-    border: 1px solid #ccc;
-    outline: none;
     border-radius: 6px;
-    font-size: 15px;
+    border: 1px solid #ccc;
 }
 
-/* Button */
-button {
+.box button {
     width: 100%;
-    background: #4A90E2;
-    color: #fff;
     padding: 12px;
+    background: #4CAF50;
+    color: white;
     font-size: 16px;
     border: none;
     border-radius: 6px;
-    margin-top: 10px;
     cursor: pointer;
-    transition: 0.3s;
 }
 
-button:hover {
-    background: #3A78C2;
+.box button:hover {
+    background: #45a049;
 }
 
-/* Bottom text */
-.container p {
-    margin-top: 15px;
-    color: #555;
-}
-
-.container a {
+.box a {
+    color: blue;
     text-decoration: none;
-    color: #4A90E2;
-    font-weight: bold;
+}
+
+.box a:hover {
+    text-decoration: underline;
 }
