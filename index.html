@@ -1,104 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up</title>
+    <title>Smart Earning Platform</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #1e90ff, #20c997);
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            background: white;
-            width: 90%;
-            max-width: 400px;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-            font-size: 24px;
-        }
-
-        input {
-            width: 90%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            font-size: 16px;
-        }
-
-        button {
-            width: 94%;
-            padding: 14px;
-            background: #1e90ff;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 18px;
-            margin-top: 10px;
-            cursor: pointer;
-        }
-
-        button:hover {
-            background: #187bcd;
-        }
-
-        a {
-            color: #1e90ff;
-            text-decoration: none;
-        }
+        body { font-family: Arial; background:#f4f4f4; text-align:center; }
+        .box { width:320px; margin:40px auto; padding:20px; background:white; border-radius:10px; }
+        input { width:90%; padding:10px; margin:6px; border-radius:5px; border:1px solid #aaa; }
+        button { width:95%; padding:10px; background:#008cff; color:white; border:0; border-radius:5px; font-size:16px; }
+        #dashboard { display:none; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <h2>Sign Up</h2>
+<h2>Smart Earning Platform</h2>
 
-        <input type="text" id="phone" placeholder="Phone Number" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+<div id="signup" class="box">
+    <h3>Sign Up</h3>
+    <input type="text" id="su_user" placeholder="Username"><br>
+    <input type="password" id="su_pass" placeholder="Password"><br>
+    <button onclick="signup()">Create Account</button><br><br>
+    <a href="#" onclick="showLogin()">Already have an account?</a>
+</div>
 
-        <button onclick="signUp()">Sign Up</button>
+<div id="login" class="box" style="display:none;">
+    <h3>Login</h3>
+    <input type="text" id="li_user" placeholder="Username"><br>
+    <input type="password" id="li_pass" placeholder="Password"><br>
+    <button onclick="login()">Login</button><br><br>
+    <a href="#" onclick="showSignup()">Create a new account</a>
+</div>
 
-        <p>Already have an account? <a href="login.html">Login</a></p>
-    </div>
+<div id="dashboard" class="box">
+    <h3>Welcome to Dashboard</h3>
+    <p id="showUser"></p>
+    <button onclick="logout()">Logout</button>
+</div>
 
-    <script>
-        function signUp() {
-            const phone = document.getElementById("phone").value;
-            const password = document.getElementById("password").value;
-            const confirmPassword = document.getElementById("confirmPassword").value;
+<script>
+    function signup() {
+        let u = document.getElementById("su_user").value;
+        let p = document.getElementById("su_pass").value;
 
-            if (!phone || !password || !confirmPassword) {
-                alert("Please fill all fields!");
-                return;
-            }
-
-            if (password !== confirmPassword) {
-                alert("Passwords do not match!");
-                return;
-            }
-
-            localStorage.setItem("userPhone", phone);
-            localStorage.setItem("userPassword", password);
-
-            alert("Signup Successful!");
-            window.location.href = "login.html";
+        if (u === "" || p === "") {
+            alert("সব ঘর পূরণ করুন!");
+            return;
         }
-    </script>
+
+        localStorage.setItem("username", u);
+        localStorage.setItem("password", p);
+
+        alert("Sign Up Successful!");
+
+        showLogin();
+    }
+
+    function login() {
+        let u = document.getElementById("li_user").value;
+        let p = document.getElementById("li_pass").value;
+
+        let su = localStorage.getItem("username");
+        let sp = localStorage.getItem("password");
+
+        if (u === su && p === sp) {
+            alert("Login Successful!");
+            document.getElementById("showUser").innerText = "User: " + u;
+            showDashboard();
+        } else {
+            alert("Wrong username or password!");
+        }
+    }
+
+    function showLogin() {
+        document.getElementById("signup").style.display = "none";
+        document.getElementById("login").style.display = "block";
+        document.getElementById("dashboard").style.display = "none";
+    }
+
+    function showSignup() {
+        document.getElementById("signup").style.display = "block";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("dashboard").style.display = "none";
+    }
+
+    function showDashboard() {
+        document.getElementById("signup").style.display = "none";
+        document.getElementById("login").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+    }
+
+    function logout() {
+        showLogin();
+    }
+</script>
 
 </body>
 </html>
