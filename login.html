@@ -1,27 +1,30 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <div class="container">
-        <h2>Login</h2>
+        <h2>লগইন</h2>
 
         <form id="loginForm">
+            
+            <div class="input-group">
+                <input type="text" id="phone" placeholder="মোবাইল নম্বর" required>
+            </div>
 
-            <input type="text" id="phone" placeholder="Phone Number" required>
-            <input type="password" id="password" placeholder="Password" required>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="পাসওয়ার্ড" required>
+            </div>
 
-            <button type="submit">Login</button>
-
+            <button type="submit">লগইন</button>
         </form>
 
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        <p>একাউন্ট নেই? <a href="index.html">রেজিস্টার করুন</a></p>
     </div>
 
     <script src="login.js"></script>
