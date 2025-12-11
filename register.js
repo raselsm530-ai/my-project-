@@ -1,19 +1,15 @@
-function register() {
+// REGISTER USER
+document.getElementById("registerForm").addEventListener("submit", function (e) {
+    e.preventDefault();
 
-    let phone = document.getElementById("phone").value;
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
-    let pin = document.getElementById("pin").value;
-    let referral = document.getElementById("referral").value;
+    let phone = document.getElementById("phone").value.trim();
+    let password = document.getElementById("password").value.trim();
+    let confirmPassword = document.getElementById("confirmPassword").value.trim();
+    let withdrawPin = document.getElementById("withdrawPin").value.trim();
+    let invite = document.getElementById("inviteCode").value.trim();
 
-    // Validation
-    if (phone.length < 10) {
-        alert("সঠিক ফোন নম্বর দিন!");
-        return;
-    }
-
-    if (password.length < 4) {
-        alert("পাসওয়ার্ড কমপক্ষে ৪ অক্ষরের হতে হবে!");
+    if (phone === "" || password === "" || confirmPassword === "" || withdrawPin === "" || invite === "") {
+        alert("সব ফিল্ড পূরণ করুন!");
         return;
     }
 
@@ -22,22 +18,32 @@ function register() {
         return;
     }
 
-    if (pin.length !== 4) {
-        alert("৪ ডিজিটের উত্তোলন পিন দিন!");
+    if (withdrawPin.length !== 4 || isNaN(withdrawPin)) {
+        alert("উত্তোলন পিন অবশ্যই ৪ সংখ্যার হতে হবে!");
         return;
     }
 
-    // Save user data
-    let userData = {
+    let users = JSON.parse(localStorage.getItem("users")) || [];
+
+    let userExists = users.find(u => u.phone === phone);
+    if (userExists) {
+        alert("এই নম্বর দিয়ে আগে অ্যাকাউন্ট খোলা হয়েছে!");
+        return;
+    }
+
+    let newUser = {
         phone: phone,
         password: password,
-        pin: pin,
-        referral: referral
+        withdrawPin: withdrawPin,
+        invite: invite,
+        balance: 0,
+        group: ""
     };
 
-    localStorage.setItem("user", JSON.stringify(userData));
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+    localStorage.setItem("currentUser", phone);
 
-    alert("নিবন্ধন সফল! লগইন করুন।");
-
+    alert("রেজিস্ট্রেশন সফল হয়েছে!");
     window.location.href = "login.html";
-}
+});
