@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deposit</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="card">
+        <h2>Deposit Money</h2>
+
+        <label>Enter Amount</label>
+        <input type="number" id="depositAmount" placeholder="Enter amount">
+
+        <button onclick="depositNow()">Deposit</button>
+
+        <p id="msg" style="margin-top: 10px; font-weight: bold;"></p>
+
+        <a href="dashboard.html">
+            <button style="background: gray;">Back</button>
+        </a>
+    </div>
+
+    <script src="wallet.js"></script>
+
+    <script>
+        function depositNow() {
+            let amount = document.getElementById("depositAmount").value;
+            amount = parseFloat(amount);
+
+            let msg = document.getElementById("msg");
+
+            if (!amount || amount <= 0) {
+                msg.innerText = "Enter valid amount!";
+                msg.style.color = "red";
+                return;
+            }
+
+            // Add money to wallet
+            let newBalance = addMoney(amount);
+
+            msg.innerText = "Deposit Successful! Balance: " + newBalance + "৳";
+            msg.style.color = "green";
+
+            // Clear input
+            document.getElementById("depositAmount").value = "";
+        }
+    </script>
+
+</body>
+</html>
