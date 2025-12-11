@@ -1,35 +1,24 @@
-document.addEventListener("DOMContentLoaded", function () {
+function loginUser() {
+    let phone = document.getElementById("phone").value;
+    let password = document.getElementById("password").value;
 
-    const loginForm = document.getElementById("loginForm");
+    // লোকালস্টোরেজ থেকে ইউজার ডাটা আনা
+    let savedUser = JSON.parse(localStorage.getItem("user"));
 
-    loginForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+    if (!savedUser) {
+        alert("কোনো অ্যাকাউন্ট পাওয়া যায়নি! আগে রেজিস্টার করুন।");
+        return;
+    }
 
-        let phone = document.getElementById("phone").value.trim();
-        let password = document.getElementById("password").value.trim();
+    if (phone === savedUser.phone && password === savedUser.password) {
+        alert("লগইন সফল! 🎉");
 
-        // Check if user data exists
-        let storedUser = localStorage.getItem("user");
+        // লগইন স্ট্যাটাস সেভ করা
+        localStorage.setItem("loggedIn", "true");
 
-        if (!storedUser) {
-            alert("No account found! Please register first.");
-            return;
-        }
-
-        let user = JSON.parse(storedUser);
-
-        if (phone === user.phone && password === user.password) {
-            alert("Login Successful!");
-
-            // Save login status
-            localStorage.setItem("isLoggedIn", "true");
-
-            // Redirect to dashboard
-            window.location.href = "dashboard.html";
-        } 
-        else {
-            alert("Incorrect Phone Number or Password!");
-        }
-    });
-
-});
+        // ড্যাশবোর্ডে পাঠানো
+        window.location.href = "dashboard.html";
+    } else {
+        alert("মোবাইল নম্বর বা পাসওয়ার্ড ভুল!");
+    }
+}
