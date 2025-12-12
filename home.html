@@ -1,4 +1,4 @@
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
@@ -9,16 +9,38 @@
 
 <body>
 
-    <div class="dashboard">
-
-        <h2>হোম পেজ</h2>
-
+    <div class="home-header">
+        <h2>স্বাগতম 👋</h2>
         <p id="welcomeText"></p>
+    </div>
 
-        <button onclick="logoutUser()" class="logout-btn">লগআউট</button>
+    <div class="home-container">
+
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/929/929430.png" alt="">
+            <h3>ব্যালেন্স</h3>
+            <p id="balanceText">0 ৳</p>
+        </div>
+
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/126/126083.png" alt="">
+            <h3>প্রোফাইল</h3>
+            <p>দেখুন</p>
+        </div>
+
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/684/684831.png" alt="">
+            <h3>লেনদেন</h3>
+            <p>ইতিহাস</p>
+        </div>
+
+        <div class="feature-card logout-card" onclick="logoutUser()">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="">
+            <h3>লগআউট</h3>
+        </div>
 
     </div>
 
     <script src="home.js"></script>
 </body>
-</html>      
+</html>
