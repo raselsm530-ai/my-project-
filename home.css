@@ -1,0 +1,138 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: #f2f5ff;
+}
+
+/* TOP BAR */
+.topbar {
+    background: #4c6fff;
+    padding: 15px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.top-icons span {
+    margin-left: 12px;
+    font-size: 20px;
+}
+
+/* USER CARD */
+.user-card {
+    background: linear-gradient(135deg, #4c6fff, #6a86ff);
+    padding: 25px;
+    margin: 18px;
+    border-radius: 15px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.user-card h1 {
+    font-size: 40px;
+    margin: 10px 0;
+}
+
+.wallet-actions {
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn {
+    padding: 10px 18px;
+    border-radius: 8px;
+    border: none;
+    color: white;
+    font-size: 16px;
+}
+
+.recharge { background: #00c853; }
+.withdraw { background: #ff5252; }
+
+/* FEATURES */
+.features {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin: 20px 10px;
+    gap: 10px;
+}
+
+.feature-box {
+    background: white;
+    padding: 12px;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 13px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.06);
+}
+
+/* PLANS */
+.section-title {
+    margin-left: 18px;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.plan-card {
+    background: white;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.07);
+}
+
+.plan-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.tag {
+    background: #ff4444;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 5px;
+    font-size: 12px;
+}
+
+.tag.green { background: #00c853; }
+
+.plan-footer {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buy-btn {
+    background: #4c6fff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    color: white;
+    border: none;
+}
+
+/* BOTTOM NAV */
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 12px 0;
+    border-top: 1px solid #ddd;
+}
+
+.bottom-nav a {
+    font-size: 16px;
+    color: #333;
+}
+
+.active {
+    color: #4c6fff;
+    font-weight: bold;
+}
