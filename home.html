@@ -16,24 +16,37 @@
 
     <div class="home-container">
 
+        <!-- ব্যালেন্স কার্ড -->
         <div class="feature-card">
             <img src="https://cdn-icons-png.flaticon.com/512/929/929430.png" alt="">
             <h3>ব্যালেন্স</h3>
             <p id="balanceText">0 ৳</p>
         </div>
 
+        <!-- Add Money Card -->
+        <div class="feature-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="">
+            <h3>টাকা যোগ করুন</h3>
+
+            <input type="number" id="amount" placeholder="পরিমাণ লিখুন" class="input-box">
+            <button onclick="addMoney()" class="add-btn">Add Money</button>
+        </div>
+
+        <!-- প্রোফাইল -->
         <div class="feature-card">
             <img src="https://cdn-icons-png.flaticon.com/512/126/126083.png" alt="">
             <h3>প্রোফাইল</h3>
             <p>দেখুন</p>
         </div>
 
+        <!-- লেনদেন -->
         <div class="feature-card">
             <img src="https://cdn-icons-png.flaticon.com/512/684/684831.png" alt="">
             <h3>লেনদেন</h3>
             <p>ইতিহাস</p>
         </div>
 
+        <!-- লগআউট -->
         <div class="feature-card logout-card" onclick="logoutUser()">
             <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="">
             <h3>লগআউট</h3>
@@ -42,5 +55,6 @@
     </div>
 
     <script src="home.js"></script>
+    <script src="addmoney.js"></script>
 </body>
 </html>
