@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Money</title>
+    <title>টাকা যোগ</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
@@ -11,19 +11,30 @@
 <body>
 
     <div class="container">
-        <h2>Add Money</h2>
+
+        <h2 class="page-title">টাকা যোগ করুন</h2>
 
         <div class="input-group">
-            <input type="number" id="amount" placeholder="টাকার পরিমাণ লিখুন">
+            <input 
+                type="number" 
+                id="amount" 
+                placeholder="টাকার পরিমাণ লিখুন"
+                min="1"
+                required
+            >
         </div>
 
-        <button onclick="addMoney()">Add Now</button>
+        <button class="btn-primary" onclick="addMoney()">
+            টাকা যোগ করুন
+        </button>
 
-        <div class="back-btn">
+        <div class="login-link" style="margin-top:20px;">
             <a href="home.html">⬅ হোমে ফিরে যান</a>
         </div>
+
     </div>
 
     <script src="addmoney.js"></script>
+
 </body>
 </html>
