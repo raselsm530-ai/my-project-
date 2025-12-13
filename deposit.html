@@ -2,19 +2,25 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>টাকা যোগ</title>
+    <title>ডিপোজিট</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 <div class="container">
-    <h2 class="page-title">টাকা যোগ করুন</h2>
+    <h2 class="page-title">ডিপোজিট করুন</h2>
 
     <div class="input-group">
-        <input type="number" id="depositAmount" placeholder="এমাউন্ট লিখুন">
+        <input type="number" id="depositAmount" placeholder="ডিপোজিট এমাউন্ট">
     </div>
 
-    <button onclick="depositMoney()">টাকা যোগ</button>
+    <button class="btn-primary" onclick="depositMoney()">
+        ডিপোজিট করুন
+    </button>
+
+    <div class="login-link">
+        <a href="home.html">হোমে ফিরে যান</a>
+    </div>
 </div>
 
 <script src="deposit.js"></script>
