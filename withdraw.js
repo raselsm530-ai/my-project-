@@ -37,3 +37,38 @@ function withdrawMoney() {
 
     if (pin !== userData.withdrawPin) {
         alert("ভুল উত্তোলন পিন!");
+        return;
+    }
+
+    /* ব্যালেন্স চেক */
+    if (!userData.balance || userData.balance < amount) {
+        alert("পর্যাপ্ত ব্যালেন্স নেই!");
+        return;
+    }
+
+    /* ব্যালেন্স আপডেট */
+    userData.balance = userData.balance - amount;
+
+    /* ট্রানজেকশন হিস্টরি তৈরি */
+    if (!userData.transactions) {
+        userData.transactions = [];
+    }
+
+    userData.transactions.push({
+        type: "Withdraw",
+        amount: amount,
+        date: new Date().toLocaleString()
+    });
+
+    /* লোকালস্টোরেজে সেভ */
+    localStorage.setItem(currentPhone, JSON.stringify(userData));
+
+    alert("উত্তোলন সফল হয়েছে ✅");
+
+    /* ইনপুট ক্লিয়ার */
+    document.getElementById("withdrawAmount").value = "";
+    document.getElementById("withdrawPin").value = "";
+
+    /* হোম পেজে পাঠানো */
+    window.location.href = "home.html";
+}
