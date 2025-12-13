@@ -1,57 +1,44 @@
- /* =========================
-   লগইন চেক
-========================= */
+ /* লগইন চেক */
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-/* =========================
-   ইউজার লোড
-========================= */
+/* ইউজার লোড */
 let currentPhone = localStorage.getItem("currentUser");
 let userData = JSON.parse(localStorage.getItem(currentPhone));
 
 if (!userData) {
-    alert("ইউজার পাওয়া যায়নি! আবার লগইন করুন।");
+    alert("ইউজার পাওয়া যায়নি!");
     window.location.href = "login.html";
 }
 
-/* =========================
-   Withdraw Function
-========================= */
+/* Withdraw Function */
 function withdrawMoney() {
-
     let amount = parseInt(document.getElementById("withdrawAmount").value);
     let pin = document.getElementById("withdrawPin").value.trim();
 
-    /* এমাউন্ট চেক */
     if (!amount || amount <= 0) {
-        alert("সঠিক উত্তোলন এমাউন্ট লিখুন!");
+        alert("সঠিক এমাউন্ট লিখুন!");
         return;
     }
 
-    /* পিন চেক */
     if (!pin || pin.length !== 4) {
-        alert("৪ সংখ্যার সঠিক পিন দিন!");
+        alert("৪ সংখ্যার পিন দিন!");
         return;
     }
 
-    /* পিন মিলছে কিনা */
     if (pin !== userData.withdrawPin) {
-        alert("ভুল উত্তোলন পিন!");
+        alert("ভুল পিন!");
         return;
     }
 
-    /* ব্যালেন্স চেক */
-    if (!userData.balance || userData.balance < amount) {
+    if (userData.balance < amount) {
         alert("পর্যাপ্ত ব্যালেন্স নেই!");
         return;
     }
 
-    /* ব্যালেন্স আপডেট */
-    userData.balance = userData.balance - amount;
+    userData.balance -= amount;
 
-    /* ট্রানজেকশন হিস্টরি */
     if (!userData.transactions) {
         userData.transactions = [];
     }
@@ -62,15 +49,8 @@ function withdrawMoney() {
         date: new Date().toLocaleString()
     });
 
-    /* লোকালস্টোরেজে সেভ */
     localStorage.setItem(currentPhone, JSON.stringify(userData));
 
     alert("উত্তোলন সফল হয়েছে ✅");
-
-    /* ইনপুট ক্লিয়ার */
-    document.getElementById("withdrawAmount").value = "";
-    document.getElementById("withdrawPin").value = "";
-
-    /* হোমে রিডাইরেক্ট */
     window.location.href = "home.html";
-}   
+}
