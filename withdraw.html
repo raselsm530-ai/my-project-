@@ -1,77 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
+ <!DOCTYPE html>
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Withdraw</title>
+    <title>টাকা উত্তোলন</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="card">
-        <h2>Withdraw Money</h2>
+<div class="container">
+    <h2 class="page-title">টাকা উত্তোলন</h2>
 
-        <label>Select Method</label>
+    <div class="input-group">
         <select id="method">
-            <option value="bkash">Bkash</option>
-            <option value="nagad">Nagad</option>
-            <option value="rocket">Rocket</option>
+            <option value="">মেথড নির্বাচন করুন</option>
+            <option value="Bkash">বিকাশ</option>
+            <option value="Nagad">নগদ</option>
+            <option value="Rocket">রকেট</option>
         </select>
-
-        <label>Account Number</label>
-        <input type="text" id="number" placeholder="Enter account number">
-
-        <label>Amount</label>
-        <input type="number" id="withdrawAmount" placeholder="Enter amount">
-
-        <button onclick="withdrawNow()">Withdraw</button>
-
-        <p id="msg" style="margin-top: 10px; font-weight: bold;"></p>
-
-        <a href="dashboard.html">
-            <button style="background: gray;">Back</button>
-        </a>
     </div>
 
-    <script src="wallet.js"></script>
+    <div class="input-group">
+        <input type="text" id="number" placeholder="অ্যাকাউন্ট নম্বর">
+    </div>
 
-    <script>
-        function withdrawNow() {
+    <div class="input-group">
+        <input type="number" id="amount" placeholder="উত্তোলনের পরিমাণ">
+    </div>
 
-            let amount = parseFloat(document.getElementById("withdrawAmount").value);
-            let number = document.getElementById("number").value;
-            let msg = document.getElementById("msg");
+    <div class="input-group">
+        <input type="password" id="pin" placeholder="উত্তোলন পিন (৪ সংখ্যা)">
+    </div>
 
-            if (!number || number.length < 6) {
-                msg.innerText = "Enter valid account number!";
-                msg.style.color = "red";
-                return;
-            }
+    <button class="btn-primary" onclick="withdrawNow()">উত্তোলন করুন</button>
 
-            if (!amount || amount <= 0) {
-                msg.innerText = "Enter valid amount!";
-                msg.style.color = "red";
-                return;
-            }
+    <p id="msg" style="margin-top:15px;font-weight:bold;"></p>
 
-            let balance = getBalance();
+    <div class="login-link">
+        <a href="home.html">← ফিরে যান</a>
+    </div>
+</div>
 
-            if (amount > balance) {
-                msg.innerText = "Not enough balance!";
-                msg.style.color = "red";
-                return;
-            }
+<script>
+/* =========================
+   Withdraw Function
+========================= */
+function withdrawNow() {
 
-            // Deduct money
-            let newBalance = deductMoney(amount);
+    let method = document.getElementById("method").value;
+    let number = document.getElementById("number").value.trim();
+    let amount = parseFloat(document.getElementById("amount").value);
+    let pin = document.getElementById("pin").value.trim();
+    let msg = document.getElementById("msg");
 
-            msg.innerText = "Withdraw request submitted! New Balance: " + newBalance + "৳";
-            msg.style.color = "green";
+    let currentUser = localStorage.getItem("currentUser");
+    let userData = JSON.parse(localStorage.getItem(currentUser));
 
-            document.getElementById("withdrawAmount").value = "";
-            document.getElementById("number").value = "";
-        }
-    </script>
+    if (!method) {
+        msg.innerText = "মেথড নির্বাচন করুন!";
+        msg.style.color = "red";
+        return;
+    }
+
+    if (!number || number.length < 6) {
+        msg.innerText = "সঠিক অ্যাকাউন্ট নম্বর দিন!";
+        msg.style.color = "red";
+        return;
+    }
+
+    if (!amount || amount <= 0) {
+        msg.innerText = "সঠিক পরিমাণ লিখুন!";
+        msg.style.color = "red";
+        return;
+    }
+
+    if (!pin || pin.length !== 4) {
+        msg.innerText = "৪ সংখ্যার পিন দিন!";
+        msg.style.color = "red";
+        return;
+    }
+
+    if (pin !== userData.withdrawPin) {
+        msg.innerText = "পিন ভুল!";
+        msg.style.color = "red";
+        return;
+    }
+
+    if (amount > userData.balance) {
+        msg.innerText = "পর্যাপ্ত ব্যালেন্স নেই!";
+        msg.style.color = "red";
+        return;
+    }
+
+    /* ব্যালেন্স কাট */
+    userData.balance -= amount;
+
+    localStorage.setItem(currentUser, JSON.stringify(userData));
+
+    msg.innerText =
+        `✔️ ${amount}৳ উত্তোলনের অনুরোধ গ্রহণ করা হয়েছে (${method})`;
+    msg.style.color = "green";
+
+    document.getElementById("amount").value = "";
+    document.getElementById("number").value = "";
+    document.getElementById("pin").value = "";
+}
+</script>
 
 </body>
 </html>
