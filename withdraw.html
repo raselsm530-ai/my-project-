@@ -2,34 +2,43 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>টাকা উত্তোলন</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
+<div class="container">
+    <h2 class="page-title">টাকা উত্তোলন</h2>
 
-        <h2 class="page-title">টাকা উত্তোলন</h2>
-
-        <form id="withdrawForm">
-
-            <div class="input-group">
-                <input type="number" id="amount" placeholder="উত্তোলনের পরিমাণ (৳)" required>
-            </div>
-
-            <div class="input-group">
-                <input type="password" id="pin" placeholder="উত্তোলন পিন (৪ সংখ্যা)" required>
-            </div>
-
-            <button type="submit" class="btn-primary">উত্তোলন করুন</button>
-
-        </form>
-
+    <div class="input-group">
+        <input type="number" id="withdrawAmount" placeholder="উত্তোলনের পরিমাণ (৳)">
     </div>
 
-    <script src="withdraw.js"></script>
+    <!-- ✅ Payment Method -->
+    <div class="input-group">
+        <select id="paymentMethod">
+            <option value="">পেমেন্ট মেথড নির্বাচন করুন</option>
+            <option value="Bkash">Bkash</option>
+            <option value="Nagad">Nagad</option>
+            <option value="Rocket">Rocket</option>
+            <option value="Bank">Bank</option>
+        </select>
+    </div>
 
+    <!-- ✅ Payment Number -->
+    <div class="input-group">
+        <input type="text" id="paymentNumber" placeholder="পেমেন্ট নম্বর">
+    </div>
+
+    <div class="input-group">
+        <input type="password" id="withdrawPin" placeholder="উত্তোলন পিন (৪ সংখ্যা)">
+    </div>
+
+    <button onclick="withdrawMoney()" class="btn-primary">
+        উত্তোলন করুন
+    </button>
+</div>
+
+<script src="withdraw.js"></script>
 </body>
 </html>
