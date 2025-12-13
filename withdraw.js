@@ -1,4 +1,4 @@
-/* =========================
+ /* =========================
    লগইন চেক
 ========================= */
 if (localStorage.getItem("loggedIn") !== "true") {
@@ -40,7 +40,7 @@ function withdrawMoney() {
     }
 
     /* ব্যালেন্স চেক */
-    if (userData.balance < amount) {
+    if (!userData.balance || userData.balance < amount) {
         alert("পর্যাপ্ত ব্যালেন্স নেই!");
         return;
     }
@@ -70,4 +70,4 @@ function withdrawMoney() {
 
     /* হোমে পাঠানো */
     window.location.href = "home.html";
-}
+}   
