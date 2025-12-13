@@ -4,47 +4,53 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>হোম</title>
+
+    <!-- CSS -->
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
+    <!-- Header -->
     <div class="home-header">
         <h2>স্বাগতম 👋</h2>
-        <p id="welcomeText"></p>
+        <p id="welcomeText">লোড হচ্ছে...</p>
     </div>
 
+    <!-- Main Container -->
     <div class="new-home-container">
 
+        <!-- Balance -->
         <div class="balance-box">
             <h3>বর্তমান ব্যালেন্স</h3>
             <p id="balanceText">0 ৳</p>
         </div>
 
+        <!-- Menu -->
         <div class="grid-menu">
 
             <div class="menu-card" onclick="window.location.href='add_money.html'">
-                <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png" alt="Add">
                 <h4>টাকা যোগ</h4>
             </div>
 
             <div class="menu-card" onclick="window.location.href='withdraw.html'">
-                <img src="https://cdn-icons-png.flaticon.com/512/929/929430.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/929/929430.png" alt="Withdraw">
                 <h4>টাকা উত্তোলন</h4>
             </div>
 
             <div class="menu-card" onclick="window.location.href='history.html'">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828817.png" alt="History">
                 <h4>লেনদেন</h4>
             </div>
 
             <div class="menu-card" onclick="window.location.href='profile.html'">
-                <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/1144/1144760.png" alt="Profile">
                 <h4>প্রোফাইল</h4>
             </div>
 
             <div class="menu-card logout" onclick="logoutUser()">
-                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png">
+                <img src="https://cdn-icons-png.flaticon.com/512/1828/1828427.png" alt="Logout">
                 <h4>লগআউট</h4>
             </div>
 
@@ -52,6 +58,7 @@
 
     </div>
 
+    <!-- JS -->
     <script src="home.js"></script>
 </body>
 </html>
