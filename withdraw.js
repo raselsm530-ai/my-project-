@@ -43,10 +43,8 @@ function withdrawMoney() {
         return;
     }
 
-    /* ব্যালেন্স আপডেট */
     userData.balance -= amount;
 
-    /* ট্রানজেকশন হিস্টরি */
     if (!userData.transactions) {
         userData.transactions = [];
     }
