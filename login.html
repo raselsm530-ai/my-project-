@@ -2,25 +2,43 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>লগইন</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<div class="container">
-    <h2 class="page-title">লগইন</h2>
+    <div class="container">
 
-    <div class="input-group">
-        <input type="text" id="phone" placeholder="মোবাইল নম্বর">
+        <h2 class="page-title">লগইন</h2>
+
+        <!-- ⚠️ form submit বন্ধ করা -->
+        <form id="loginForm">
+
+            <div class="input-group">
+                <input type="text" id="phone" placeholder="মোবাইল নম্বর" required>
+            </div>
+
+            <div class="input-group">
+                <input type="password" id="password" placeholder="পাসওয়ার্ড" required>
+            </div>
+
+            <!-- ⚠️ type="button" -->
+            <button type="button" class="btn-primary" onclick="loginUser()">
+                লগইন
+            </button>
+
+        </form>
+
+        <div class="signup-link">
+            একাউন্ট নেই? <a href="register.html">রেজিস্টার করুন</a>
+        </div>
+
     </div>
 
-    <div class="input-group">
-        <input type="password" id="password" placeholder="পাসওয়ার্ড">
-    </div>
+    <script src="login.js"></script>
 
-    <button onclick="loginUser()">লগইন</button>
-</div>
-
-<script src="login.js"></script>
 </body>
 </html>
