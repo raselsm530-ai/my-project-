@@ -1,29 +1,24 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<title>ডিপোজিট</title>
-<link rel="stylesheet" href="style.css">
-</head><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>ডিপোজিট</title>
+    <link rel="stylesheet" href="style.css">
+</head>
 <body>
 
 <div class="container">
-<h2>ডিপোজিট করুন</h2>
+    <h2 class="page-title">ডিপোজিট</h2>
 
-<input type="number" id="depositAmount" placeholder="ডিপোজিট এমাউন্ট">
+    <div class="input-group">
+        <input type="number" id="depositAmount" placeholder="টাকার পরিমাণ">
+    </div>
 
-<select id="paymentMethod">
-  <option value="">পেমেন্ট মেথড নির্বাচন করুন</option>
-  <option value="bKash">bKash</option>
-  <option value="Nagad">Nagad</option>
-  <option value="Rocket">Rocket</option>
-</select>
+    <button onclick="addMoney()">ডিপোজিট করুন</button>
 
-<input type="text" id="trxId" placeholder="Transaction ID">
-
-<button onclick="depositMoney()">ডিপোজিট সাবমিট করুন</button>
-
-<a href="home.html">হোমে ফিরে যান</a>
+    <div class="login-link">
+        <a href="home.html">← হোমে ফিরে যান</a>
+    </div>
 </div>
 
 <script src="deposit.js"></script>
