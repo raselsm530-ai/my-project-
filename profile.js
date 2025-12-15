@@ -12,13 +12,13 @@ if (!userData) {
 }
 
 /* ডাটা দেখানো */
-document.getElementById("profilePhone").value =
+document.getElementById("profilePhone").innerText =
     "মোবাইল: " + userData.phone;
 
-document.getElementById("profileBalance").value =
+document.getElementById("profileBalance").innerText =
     "ব্যালেন্স: " + (userData.balance || 0) + " ৳";
 
-document.getElementById("profilePin").value =
+document.getElementById("profilePin").innerText =
     "উত্তোলন পিন: " + userData.withdrawPin;
 
 /* হোম */
