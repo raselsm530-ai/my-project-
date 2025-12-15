@@ -6,38 +6,41 @@ if (localStorage.getItem("loggedIn") !== "true") {
 let currentPhone = localStorage.getItem("currentUser");
 let userData = JSON.parse(localStorage.getItem(currentPhone));
 
-if (!userData) {
-    alert("ইউজার পাওয়া যায়নি!");
-    window.location.href = "login.html";
-}
+function buyPackage(price, name) {
 
-/* প্যাকেজ কেনা */
-function buyPackage(amount) {
-
-    if (!userData.balance || userData.balance < amount) {
-        alert("পর্যাপ্ত ব্যালেন্স নেই ❌");
+    if (userData.balance < price) {
+        alert("পর্যাপ্ত ব্যালেন্স নেই!");
         return;
     }
 
-    // ব্যালেন্স কাট
-    userData.balance -= amount;
+    /* ব্যালেন্স কাট */
+    userData.balance -= price;
 
-    // প্যাকেজ লিস্ট না থাকলে বানাও
+    /* প্যাকেজ হিস্টরি */
     if (!userData.packages) {
         userData.packages = [];
     }
 
-    // প্যাকেজ যোগ
     userData.packages.push({
-        amount: amount,
-        date: new Date().toLocaleString(),
-        status: "Active"
+        name: name,
+        price: price,
+        date: new Date().toLocaleString()
     });
 
-    // লোকালস্টোরেজে সেভ
+    /* ট্রানজেকশন হিস্টরি */
+    if (!userData.transactions) {
+        userData.transactions = [];
+    }
+
+    userData.transactions.push({
+        type: "Package Buy",
+        amount: price,
+        date: new Date().toLocaleString()
+    });
+
     localStorage.setItem(currentPhone, JSON.stringify(userData));
 
-    alert("প্যাকেজ সফলভাবে Active হয়েছে ✅");
+    alert(name + " প্যাকেজ সফলভাবে কেনা হয়েছে 🎉");
 
     window.location.href = "home.html";
 }
