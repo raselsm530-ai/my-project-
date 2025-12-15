@@ -2,42 +2,43 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>প্যাকেজসমূহ</title>
+    <title>প্যাকেজ</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="home-header">
-    <h2>আমার প্যাকেজ</h2>
-    <p id="welcomeText"></p>
+<div class="container">
+    <h2 class="page-title">প্যাকেজ নির্বাচন করুন</h2>
+
+    <div class="grid-menu">
+
+        <div class="menu-card" onclick="buyPackage(2000)">
+            <h4>প্যাকেজ ২০০০</h4>
+            <p>মূল্য: ২০০০ ৳</p>
+        </div>
+
+        <div class="menu-card" onclick="buyPackage(3000)">
+            <h4>প্যাকেজ ৩০০০</h4>
+            <p>মূল্য: ৩০০০ ৳</p>
+        </div>
+
+        <div class="menu-card" onclick="buyPackage(5000)">
+            <h4>প্যাকেজ ৫০০০</h4>
+            <p>মূল্য: ৫০০০ ৳</p>
+        </div>
+
+        <div class="menu-card" onclick="buyPackage(10000)">
+            <h4>প্যাকেজ ১০০০০</h4>
+            <p>মূল্য: ১০০০০ ৳</p>
+        </div>
+
+    </div>
+
+    <button onclick="window.location.href='home.html'">
+        হোমে ফিরে যান
+    </button>
 </div>
 
-<div class="grid-menu">
-
-    <div class="menu-card" onclick="selectPackage('Starter', 300)">
-        <h4>Starter Package</h4>
-        <p>৳300</p>
-        <p>ডেইলি ইনকাম</p>
-    </div>
-
-    <div class="menu-card" onclick="selectPackage('Silver', 1000)">
-        <h4>Silver Package</h4>
-        <p>৳1000</p>
-        <p>বেশি ইনকাম</p>
-    </div>
-
-    <div class="menu-card" onclick="selectPackage('Gold', 3000)">
-        <h4>Gold Package</h4>
-        <p>৳3000</p>
-        <p>প্রিমিয়াম</p>
-    </div>
-
-    <div class="menu-card logout" onclick="logoutUser()">
-        <h4>লগআউট</h4>
-    </div>
-
-</div>
-
-<script src="packages.js"></script>
+<script src="package.js"></script>
 </body>
 </html>
