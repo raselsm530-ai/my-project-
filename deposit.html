@@ -8,19 +8,34 @@
 <body>
 
 <div class="container">
-    <h2 class="page-title">টাকা ডিপোজিট</h2>
+    <h2 class="page-title">ডিপোজিট করুন</h2>
+
+    <div class="deposit-info">
+        <p>📱 বিকাশ / নগদ / রকেট</p>
+        <h3>01797632229</h3>
+        <p>এই নাম্বারে টাকা পাঠান</p>
+    </div>
 
     <div class="input-group">
         <input type="number" id="depositAmount" placeholder="ডিপোজিট এমাউন্ট">
     </div>
 
-    <button onclick="depositMoney()" class="btn-primary">
-        ডিপোজিট করুন
+    <div class="input-group">
+        <input type="text" id="trxId" placeholder="Transaction ID">
+    </div>
+
+    <div class="input-group">
+        <input type="file" id="screenshot" accept="image/*">
+    </div>
+
+    <button onclick="submitDeposit()" class="btn-primary">
+        সাবমিট ডিপোজিট
     </button>
 
-    <div class="login-link">
-        <a href="home.html">হোমে ফিরে যান</a>
-    </div>
+    <br><br>
+    <button onclick="window.location.href='home.html'">
+        ⬅ হোমে ফিরে যান
+    </button>
 </div>
 
 <script src="deposit.js"></script>
