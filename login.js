@@ -21,5 +21,5 @@ function loginUser() {
     localStorage.setItem("currentUser", phone);
 
     alert("লগইন সফল 🎉");
-    window.location.href = "packages.html";
+    window.location.href = "dashboard.html";
 }
