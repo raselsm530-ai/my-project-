@@ -3,7 +3,7 @@ function updateNumber() {
     let numberText = document.getElementById("paymentNumber");
 
     if (method === "Bkash") {
-        numberText.innerText = "বিকাশ: 01XXXXXXXXX";
+        numberText.innerText = "বিকাশ: 01731249916";
     } else if (method === "Nagad") {
         numberText.innerText = "নগদ: 01YYYYYYYYY";
     } else if (method === "Rocket") {
