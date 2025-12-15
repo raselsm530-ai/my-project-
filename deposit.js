@@ -1,13 +1,8 @@
-/* =========================
-   লগইন চেক
-========================= */
+/* লগইন চেক */
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-/* =========================
-   ইউজার লোড
-========================= */
 let currentPhone = localStorage.getItem("currentUser");
 let userData = JSON.parse(localStorage.getItem(currentPhone));
 
@@ -16,47 +11,40 @@ if (!userData) {
     window.location.href = "login.html";
 }
 
-/* =========================
-   Deposit Request
-========================= */
-function depositRequest() {
-    let amount = parseInt(document.getElementById("depositAmount").value);
-    let method = document.getElementById("depositMethod").value;
-    let trx = document.getElementById("trxId").value.trim();
+function submitDeposit() {
+    let amount = document.getElementById("depositAmount").value.trim();
+    let trxId = document.getElementById("trxId").value.trim();
+    let screenshot = document.getElementById("screenshot").files[0];
 
     if (!amount || amount <= 0) {
-        alert("সঠিক এমাউন্ট লিখুন!");
+        alert("সঠিক এমাউন্ট দিন!");
         return;
     }
 
-    if (!method) {
-        alert("ডিপোজিট মেথড সিলেক্ট করুন!");
+    if (!trxId) {
+        alert("Transaction ID দিন!");
         return;
     }
 
-    if (!trx) {
-        alert("TRX ID দিন!");
+    if (!screenshot) {
+        alert("স্ক্রিনশট আপলোড করুন!");
         return;
     }
 
-    if (!userData.depositRequests) {
-        userData.depositRequests = [];
-    }
+    /* Pending Deposit List */
+    let deposits = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
 
-    userData.depositRequests.push({
+    deposits.push({
+        phone: currentPhone,
         amount: amount,
-        method: method,
-        trx: trx,
-        status: "Pending",
-        date: new Date().toLocaleString()
+        trxId: trxId,
+        time: new Date().toLocaleString(),
+        status: "Pending"
     });
 
-    localStorage.setItem(currentPhone, JSON.stringify(userData));
+    localStorage.setItem("pendingDeposits", JSON.stringify(deposits));
 
-    alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে ⏳");
-
-    document.getElementById("depositAmount").value = "";
-    document.getElementById("trxId").value = "";
+    alert("ডিপোজিট সাবমিট হয়েছে ✅\nঅ্যাডমিন ভেরিফাই করলে ব্যালেন্স যোগ হবে");
 
     window.location.href = "home.html";
 }
