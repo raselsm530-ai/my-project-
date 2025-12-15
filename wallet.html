@@ -10,12 +10,18 @@
 <div class="container">
     <h2 class="page-title">টাকা যোগ করুন</h2>
 
+    <!-- Payment Number Box -->
+    <div class="info-box">
+        <p><strong>ডিপোজিট নাম্বার:</strong></p>
+        <p id="paymentNumber">মেথড নির্বাচন করুন</p>
+    </div>
+
     <div class="input-group">
         <input type="number" id="depositAmount" placeholder="এমাউন্ট লিখুন">
     </div>
 
     <div class="input-group">
-        <select id="paymentMethod">
+        <select id="paymentMethod" onchange="updateNumber()">
             <option value="">পেমেন্ট মেথড নির্বাচন করুন</option>
             <option value="Bkash">বিকাশ</option>
             <option value="Nagad">নগদ</option>
