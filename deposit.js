@@ -12,55 +12,51 @@ let currentPhone = localStorage.getItem("currentUser");
 let userData = JSON.parse(localStorage.getItem(currentPhone));
 
 if (!userData) {
-    alert("ইউজার পাওয়া যায়নি! আবার লগইন করুন।");
+    alert("ইউজার পাওয়া যায়নি!");
     window.location.href = "login.html";
 }
 
-/// ডিপোজিট নাম্বার (এখানে তোমার নাম্বার বসাও)
-const DEPOSIT_NUMBER = "01XXXXXXXXX";
-
-// লগইন চেক
-if (localStorage.getItem("loggedIn") !== "true") {
-    window.location.href = "login.html";
-}
-
-// নাম্বার দেখানো
-document.getElementById("depositNumber").innerText = DEPOSIT_NUMBER; =========================
-   Deposit Function
+/* =========================
+   Deposit Request
 ========================= */
-function depositMoney() {
+function depositRequest() {
     let amount = parseInt(document.getElementById("depositAmount").value);
+    let method = document.getElementById("depositMethod").value;
+    let trx = document.getElementById("trxId").value.trim();
 
     if (!amount || amount <= 0) {
-        alert("সঠিক ডিপোজিট এমাউন্ট লিখুন!");
+        alert("সঠিক এমাউন্ট লিখুন!");
         return;
     }
 
-    /* আগের ব্যালেন্স না থাকলে 0 */
-    if (!userData.balance) {
-        userData.balance = 0;
+    if (!method) {
+        alert("ডিপোজিট মেথড সিলেক্ট করুন!");
+        return;
     }
 
-    /* ব্যালেন্স আপডেট */
-    userData.balance += amount;
-
-    /* ট্রানজেকশন হিস্টরি */
-    if (!userData.transactions) {
-        userData.transactions = [];
+    if (!trx) {
+        alert("TRX ID দিন!");
+        return;
     }
 
-    userData.transactions.push({
-        type: "Deposit",
+    if (!userData.depositRequests) {
+        userData.depositRequests = [];
+    }
+
+    userData.depositRequests.push({
         amount: amount,
+        method: method,
+        trx: trx,
+        status: "Pending",
         date: new Date().toLocaleString()
     });
 
-    /* সেভ */
     localStorage.setItem(currentPhone, JSON.stringify(userData));
 
-    alert("ডিপোজিট সফল হয়েছে ✅");
+    alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে ⏳");
 
     document.getElementById("depositAmount").value = "";
+    document.getElementById("trxId").value = "";
 
     window.location.href = "home.html";
 }
