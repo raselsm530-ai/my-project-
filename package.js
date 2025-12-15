@@ -1,46 +1,39 @@
-/* =========================
-   লগইন চেক
-========================= */
+/* লগইন চেক */
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-/* =========================
-   ইউজার লোড
-========================= */
 let currentPhone = localStorage.getItem("currentUser");
 let userData = JSON.parse(localStorage.getItem(currentPhone));
 
 if (!userData) {
-    alert("ইউজার পাওয়া যায়নি! আবার লগইন করুন।");
+    alert("ইউজার পাওয়া যায়নি!");
     window.location.href = "login.html";
 }
 
-/* =========================
-   Buy Package Function
-========================= */
-function buyPackage(price) {
+function buyPackage(price, name) {
 
-    /* ব্যালেন্স না থাকলে 0 */
+    /* ব্যালেন্স না থাকলে 0 ধরবে */
     if (!userData.balance) {
         userData.balance = 0;
     }
 
     /* ব্যালেন্স চেক */
     if (userData.balance < price) {
-        alert("পর্যাপ্ত ব্যালেন্স নেই!");
+        alert("পর্যাপ্ত ব্যালেন্স নেই! আগে ডিপোজিট করুন।");
         return;
     }
 
     /* ব্যালেন্স কাট */
     userData.balance -= price;
 
-    /* প্যাকেজ হিস্টরি */
+    /* প্যাকেজ লিস্ট */
     if (!userData.packages) {
         userData.packages = [];
     }
 
     userData.packages.push({
+        name: name,
         price: price,
         date: new Date().toLocaleString()
     });
@@ -53,13 +46,14 @@ function buyPackage(price) {
     userData.transactions.push({
         type: "Package Buy",
         amount: price,
+        details: name,
         date: new Date().toLocaleString()
     });
 
-    /* লোকালস্টোরেজে সেভ */
+    /* সেভ */
     localStorage.setItem(currentPhone, JSON.stringify(userData));
 
-    alert("প্যাকেজ সফলভাবে কেনা হয়েছে 🎉");
+    alert(name + " সফলভাবে কেনা হয়েছে 🎉");
 
     window.location.href = "home.html";
 }
