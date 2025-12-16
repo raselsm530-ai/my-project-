@@ -1,56 +1,60 @@
-/* =========================
-   লগইন চেক
-========================= */
+/* লগইন চেক */
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-/* =========================
-   ইউজার লোড
-========================= */
 let currentPhone = localStorage.getItem("currentUser");
 let userData = JSON.parse(localStorage.getItem(currentPhone));
 
 if (!userData) {
-    alert("ইউজার পাওয়া যায়নি! আবার লগইন করুন।");
+    alert("ইউজার পাওয়া যায়নি!");
     window.location.href = "login.html";
 }
 
-/* =========================
-   Deposit Function
-========================= */
-function depositMoney() {
+function submitDeposit() {
     let amount = parseInt(document.getElementById("depositAmount").value);
+    let trxId = document.getElementById("trxId").value.trim();
 
     if (!amount || amount <= 0) {
-        alert("সঠিক এমাউন্ট লিখুন!");
+        alert("সঠিক ডিপোজিট এমাউন্ট লিখুন!");
         return;
     }
 
-    /* ব্যালেন্স না থাকলে 0 সেট */
-    if (!userData.balance) {
-        userData.balance = 0;
+    if (trxId === "") {
+        alert("Transaction ID দিন!");
+        return;
     }
 
-    /* ব্যালেন্সে টাকা যোগ */
-    userData.balance += amount;
+    // Pending deposit array
+    if (!userData.pendingDeposits) {
+        userData.pendingDeposits = [];
+    }
 
-    /* ট্রানজেকশন হিস্টরি না থাকলে তৈরি */
+    userData.pendingDeposits.push({
+        amount: amount,
+        trxId: trxId,
+        number: "01797632229",
+        method: "Bkash/Nagad/Rocket",
+        status: "Pending",
+        date: new Date().toLocaleString()
+    });
+
+    // Transaction history
     if (!userData.transactions) {
         userData.transactions = [];
     }
 
     userData.transactions.push({
-        type: "Deposit",
+        type: "Deposit Request",
         amount: amount,
+        trxId: trxId,
+        status: "Pending",
         date: new Date().toLocaleString()
     });
 
-    /* লোকালস্টোরেজে সেভ */
     localStorage.setItem(currentPhone, JSON.stringify(userData));
 
-    alert("ডিপোজিট সফল হয়েছে ✅\nটাকা ওয়ালেটে যোগ হয়েছে");
+    alert("✅ ডিপোজিট রিকোয়েস্ট সফলভাবে সাবমিট হয়েছে\nঅ্যাডমিন কনফার্ম করার পর ব্যালেন্স যোগ হবে");
 
-    /* হোমে রিডাইরেক্ট */
     window.location.href = "home.html";
 }
