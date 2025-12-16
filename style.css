@@ -167,4 +167,39 @@ button {
 .deposit-info h3 {
     margin: 5px 0;
     color: #3d5af1;
+}body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    min-height: 100vh;
+}
+
+/* হোমের মূল container */
+.container {
+    background: #f5f7ff;
+    border-radius: 25px 25px 0 0;
+    margin-top: 80px;
+    padding: 20px;
+}
+
+/* উপরের নীল অংশ */
+.header {
+    background: linear-gradient(135deg, #4facfe, #00c6ff);
+    padding: 25px;
+    color: white;
+    border-radius: 0 0 30px 30px;
+    text-align: center;
+}
+
+/* কার্ডগুলো */
+.menu-card {
+    background: white;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
 }
