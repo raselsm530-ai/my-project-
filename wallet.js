@@ -1,15 +1,14 @@
-// পেমেন্ট মেথড অনুযায়ী ফিক্সড নাম্বার দেখাবে
 function updateNumber() {
     const method = document.getElementById("paymentMethod").value;
     const numberBox = document.getElementById("paymentNumber");
 
-    if (method === "Bkash") {
+    if (method === "বিকাশ") {
         numberBox.innerText = "📱 বিকাশ নাম্বার: 01797632229";
     } 
-    else if (method === "Nagad") {
+    else if (method === "নগদ") {
         numberBox.innerText = "📱 নগদ নাম্বার: 01797632229";
     } 
-    else if (method === "Rocket") {
+    else if (method === "রকেট") {
         numberBox.innerText = "📱 রকেট নাম্বার: 01797632229";
     } 
     else {
@@ -17,7 +16,6 @@ function updateNumber() {
     }
 }
 
-// ডিপোজিট সাবমিট (Admin approve এর জন্য Pending যাবে)
 function depositMoney() {
     let amount = document.getElementById("depositAmount").value;
     let method = document.getElementById("paymentMethod").value;
