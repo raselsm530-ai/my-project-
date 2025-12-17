@@ -1,70 +1,47 @@
-/* ========= Simple Admin Auth ========= */
-let adminPass = prompt("Admin Password দিন:");
+let list = document.getElementById("depositList");
+let deposits = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
 
-if (adminPass !== "admin123") {
-    alert("Access Denied!");
-    window.location.href = "login.html";
-}
+list.innerHTML = "";
 
-/* ========= Withdraw Requests ========= */
-let requestList = document.getElementById("requestList");
+deposits.forEach((d, i) => {
+    if (d.status === "pending") {
+        let div = document.createElement("div");
+        div.className = "info-box";
 
-let allKeys = Object.keys(localStorage);
-let found = false;
+        div.innerHTML = `
+            <p>User: ${d.user}</p>
+            <p>Amount: ${d.amount} ৳</p>
+            <p>Method: ${d.method}</p>
+            <p>${d.time}</p>
+            <button onclick="approve(${i})">Approve</button>
+        `;
 
-allKeys.forEach(key => {
-    let user = JSON.parse(localStorage.getItem(key));
-
-    if (user && user.transactions) {
-        user.transactions.forEach((tx, index) => {
-            if (tx.type === "Withdraw" && !tx.status) {
-                found = true;
-
-                let div = document.createElement("div");
-                div.className = "menu-card";
-                div.innerHTML = `
-                    <p><b>Phone:</b> ${user.phone}</p>
-                    <p><b>Amount:</b> ${tx.amount} ৳</p>
-                    <p>${tx.date}</p>
-
-                    <button onclick="approve('${key}', ${index})">Approve</button>
-                    <button onclick="reject('${key}', ${index})">Reject</button>
-                `;
-                requestList.appendChild(div);
-            }
-        });
+        list.appendChild(div);
     }
 });
 
-if (!found) {
-    requestList.innerHTML = "<p>কোনো Pending Withdraw নেই</p>";
-}
+function approve(index) {
+    let d = deposits[index];
+    let key = "balance_" + d.user;
 
-/* ========= Approve ========= */
-function approve(phone, index) {
-    let user = JSON.parse(localStorage.getItem(phone));
+    let balance = Number(localStorage.getItem(key)) || 0;
+    balance += d.amount;
 
-    user.transactions[index].status = "Approved";
+    localStorage.setItem(key, balance);
 
-    localStorage.setItem(phone, JSON.stringify(user));
-    alert("Withdraw Approved ✅");
+    // history
+    let history = JSON.parse(localStorage.getItem("history_" + d.user)) || [];
+    history.push({
+        type: "Deposit",
+        amount: d.amount,
+        time: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("history_" + d.user, JSON.stringify(history));
+
+    deposits[index].status = "approved";
+    localStorage.setItem("pendingDeposits", JSON.stringify(deposits));
+
+    alert("Deposit Approved");
     location.reload();
-}
-
-/* ========= Reject ========= */
-function reject(phone, index) {
-    let user = JSON.parse(localStorage.getItem(phone));
-
-    user.transactions[index].status = "Rejected";
-
-    // Reject হলে টাকা ফেরত
-    user.balance += user.transactions[index].amount;
-
-    localStorage.setItem(phone, JSON.stringify(user));
-    alert("Withdraw Rejected ❌");
-    location.reload();
-}
-
-function logoutAdmin() {
-    window.location.href = "login.html";
 }
