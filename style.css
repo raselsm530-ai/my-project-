@@ -131,4 +131,22 @@ button {
     padding: 25px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+}.wallet-page {
+    background: #eef2ff;
+}
+
+/* 🔥 screen fix */
+.small-container {
+    max-width: 420px;
+    margin: 0 auto;
+    min-height: auto;
+}
+
+/* info box */
+.info-box {
+    background: #eef2ff;
+    padding: 16px;
+    border-radius: 14px;
+    text-align: center;
+    margin-bottom: 16px;
 }
