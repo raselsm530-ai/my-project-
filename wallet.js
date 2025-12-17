@@ -1,8 +1,8 @@
 // Fixed Deposit Numbers
 const fixedNumbers = {
-    "Bkash": "01797632229",
-    "Nagad": "01797632229",
-    "Rocket": "01797632229"
+    "bkash": "01797632229",
+    "nagad": "01797632229",
+    "rocket": "01797632229"
 };
 
 // Update number when method selected
@@ -28,13 +28,12 @@ function depositMoney() {
         return;
     }
 
-    // Pending deposit store
     let deposits = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
 
     deposits.push({
         user: localStorage.getItem("username"),
-        amount: amount,
-        method: method,
+        amount,
+        method,
         number: fixedNumbers[method],
         time: new Date().toLocaleString()
     });
