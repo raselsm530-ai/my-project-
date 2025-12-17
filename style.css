@@ -6,33 +6,14 @@
 }
 
 /* ================= GLOBAL ================= */
-html, body {
+html {
     width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
 }
 
-/* wallet / deposit page */
-.wallet-page {
-    background: #eef2ff;
-}
-
-/* 🔥 MAIN FIX */
-.container {
-    width: 100%;
-    max-width: 420px;
-    margin: 0 auto;
-    padding: 20px;
-    background: #f5f7ff;
-}
-
-/* mobile safe spacing */
 body {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
+    width: 100%;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
 }
 
 /* ================= HOME PAGE ================= */
@@ -75,17 +56,19 @@ body.home {
     cursor: pointer;
 }
 
-/* ================= FORM / WALLET / DEPOSIT ================= */
+/* ================= WALLET / DEPOSIT PAGE ================= */
 body:not(.home) {
     background: linear-gradient(135deg, #667eea, #764ba2);
 }
 
-/* 🔥 এটা সবচেয়ে গুরুত্বপূর্ণ অংশ */
+/* ✅ MAIN CONTAINER FIX */
 .container {
     width: 100%;
-    min-height: 100vh;
+    max-width: 420px;
+    margin: 20px auto;
     background: #f5f7ff;
     padding: 20px;
+    border-radius: 18px;
 }
 
 /* Page title */
@@ -97,7 +80,7 @@ body:not(.home) {
     color: #333;
 }
 
-/* Inputs */
+/* ================= FORM ================= */
 .input-group {
     margin-bottom: 14px;
 }
@@ -111,7 +94,7 @@ body:not(.home) {
     font-size: 16px;
 }
 
-/* Buttons */
+/* Button */
 button {
     width: 100%;
     padding: 14px;
@@ -124,12 +107,13 @@ button {
 }
 
 /* ================= DEPOSIT INFO ================= */
+.info-box,
 .deposit-info {
     background: #eef2ff;
-    padding: 18px;
-    border-radius: 16px;
+    padding: 16px;
+    border-radius: 14px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 16px;
 }
 
 .deposit-number {
@@ -137,39 +121,25 @@ button {
     font-weight: 700;
     color: #1e40af;
     margin: 8px 0;
-}/* ===== CARD PAGE LAYOUT (Deposit / History) ===== */
+}
+
+/* ================= CARD PAGE (History / Deposit) ================= */
 .card-page {
     min-height: 100vh;
     background: #eef3ff;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    padding-top: 40px;
+    padding: 30px 12px;
 }
 
 .card-page .container {
-    width: 100%;
-    max-width: 420px;
+    margin: 0 auto;
     background: #ffffff;
     padding: 25px;
     border-radius: 20px;
     box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-}.wallet-page {
-    background: #eef2ff;
 }
 
-/* 🔥 screen fix */
+/* ================= SAFE MOBILE FIX ================= */
 .small-container {
     max-width: 420px;
     margin: 0 auto;
-    min-height: auto;
-}
-
-/* info box */
-.info-box {
-    background: #eef2ff;
-    padding: 16px;
-    border-radius: 14px;
-    text-align: center;
-    margin-bottom: 16px;
 }
