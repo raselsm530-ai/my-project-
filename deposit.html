@@ -2,33 +2,40 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <title>ডিপোজিট</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ডিপোজিট</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
-<body class="card-page">
+<body class="wallet-page">
 
-<div class="container">
+<div class="container small-container">
     <h2 class="page-title">টাকা যোগ করুন</h2>
 
-    <div class="deposit-info">
-        <p>📱 বিকাশ / নগদ / রকেট</p>
-        <div class="deposit-number">01797632229</div>
-        <p>এই নাম্বারে টাকা পাঠান</p>
+    <div class="info-box">
+        <p>📱 ডিপোজিট নাম্বার</p>
+        <div id="paymentNumber" class="deposit-number">
+            মেথড নির্বাচন করুন
+        </div>
     </div>
 
     <div class="input-group">
         <input type="number" id="depositAmount" placeholder="ডিপোজিট এমাউন্ট">
     </div>
 
-    <button onclick="depositMoney()">ডিপোজিট করুন</button>
+    <div class="input-group">
+        <select id="paymentMethod">
+            <option value="">পেমেন্ট মেথড নির্বাচন করুন</option>
+            <option value="Bkash">বিকাশ</option>
+            <option value="Nagad">নগদ</option>
+            <option value="Rocket">রকেট</option>
+        </select>
+    </div>
+
+    <button id="depositBtn">ডিপোজিট করুন</button>
 
     <br><br>
-
-    <button onclick="window.location.href='home.html'">
-        ⬅ হোমে ফিরে যান
-    </button>
+    <button onclick="window.location.href='home.html'">⬅ হোমে ফিরে যান</button>
 </div>
 
 <script src="wallet.js"></script>
