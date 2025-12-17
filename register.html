@@ -4,49 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>রেজিস্টার</title>
-
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-    <div class="container">
+<div class="container">
+    <h2 class="page-title">রেজিস্টার</h2>
 
-        <h2 class="page-title">রেজিস্টার</h2>
+    <form id="registerForm">
 
-        <form onsubmit="registerUser(); return false;">
-
-            <div class="input-group">
-                <input type="text" id="phone" placeholder="মোবাইল নম্বর" required>
-            </div>
-
-            <div class="input-group">
-                <input type="password" id="password" placeholder="পাসওয়ার্ড" required>
-            </div>
-
-            <div class="input-group">
-                <input type="password" id="confirmPassword" placeholder="কনফার্ম পাসওয়ার্ড" required>
-            </div>
-
-            <div class="input-group">
-                <input type="number" id="withdrawPin" placeholder="উইথড্রো পিন (৪ সংখ্যা)" required>
-            </div>
-
-            <div class="input-group">
-                <input type="text" id="refCode" placeholder="রেফার কোড (ঐচ্ছিক)">
-            </div>
-
-            <button type="submit" class="btn-primary">রেজিস্টার</button>
-
-        </form>
-
-        <div class="login-link">
-            ইতিমধ্যে একাউন্ট আছে?
-            <a href="login.html">লগইন</a>
+        <div class="input-group">
+            <input type="text" id="phone" placeholder="মোবাইল নম্বর" required>
         </div>
 
+        <div class="input-group">
+            <input type="password" id="password" placeholder="পাসওয়ার্ড" required>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="confirmPassword" placeholder="কনফার্ম পাসওয়ার্ড" required>
+        </div>
+
+        <div class="input-group">
+            <input type="number" id="withdrawPin" placeholder="উইথড্রো পিন (৪ সংখ্যা)" required>
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="inviteCode" placeholder="রেফার কোড (ঐচ্ছিক)">
+        </div>
+
+        <button type="submit" class="btn-primary">রেজিস্টার</button>
+
+    </form>
+
+    <div class="login-link">
+        ইতিমধ্যে একাউন্ট আছে? <a href="login.html">লগইন</a>
     </div>
+</div>
 
-    <script src="register.js"></script>
-
+<script src="register.js"></script>
 </body>
 </html>
