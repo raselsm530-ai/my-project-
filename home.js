@@ -1,28 +1,24 @@
-// লগইন চেক
-if (localStorage.getItem("loggedIn") !== "true") {
+// User check
+let user = localStorage.getItem("currentUser");
+
+if (!user) {
+    // যদি লগইন না থাকে
     window.location.href = "login.html";
 }
 
-let currentPhone = localStorage.getItem("currentUser");
-let userData = JSON.parse(localStorage.getItem(currentPhone));
-
-if (!userData) {
-    window.location.href = "login.html";
-}
-
-// ওয়েলকাম টেক্সট
+// Welcome text
 document.getElementById("welcomeText").innerText =
-    "স্বাগতম, " + userData.phone;
+    "স্বাগতম, " + user;
 
-// ব্যালেন্স না থাকলে 0 ধরবে
-let balance = userData.balance ? userData.balance : 0;
+// Balance show
+let balance = localStorage.getItem("balance_" + user);
+balance = balance ? parseFloat(balance) : 0;
 
-document.getElementById("balanceText").innerText =
+document.getElementById("balance").innerText =
     balance + " ৳";
 
-// লগআউট
+// Logout
 function logoutUser() {
-    localStorage.removeItem("loggedIn");
     localStorage.removeItem("currentUser");
     window.location.href = "login.html";
 }
