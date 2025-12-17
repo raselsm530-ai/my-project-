@@ -28,8 +28,8 @@ if (!userData.transactions || userData.transactions.length === 0) {
                 <p>এমাউন্ট: ${item.amount} ৳</p>
                 ${item.details ? `<p>${item.details}</p>` : ""}
                 <small>${item.date}</small>
-            </div>
-        `;
+            div.className = "history-item";
+        
     });
 
     historyBox.innerHTML = html;
