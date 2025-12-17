@@ -1,43 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="bn">
 <head>
+    <meta charset="UTF-8">
     <title>Admin Panel</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h2>Deposit Requests</h2>
-<div id="list"></div>
 
-<script>
-let deposits = JSON.parse(localStorage.getItem("deposits")) || [];
-let html = "";
+<div class="container">
+    <h2 class="page-title">Pending Deposits</h2>
+    <div id="depositList"></div>
+</div>
 
-deposits.forEach((d, i) => {
-    html += `
-    <div style="border:1px solid #ccc;padding:10px;margin:10px">
-        <p>User: ${d.user}</p>
-        <p>Method: ${d.method}</p>
-        <p>Amount: ${d.amount}</p>
-        <p>TrxID: ${d.trxid}</p>
-        <p>Status: ${d.status}</p>
-        ${d.status === "Pending" ? `<button onclick="approve(${i})">Approve</button>` : ""}
-    </div>`;
-});
-
-document.getElementById("list").innerHTML = html;
-
-function approve(i) {
-    deposits[i].status = "Approved";
-
-    let user = deposits[i].user;
-    let amount = deposits[i].amount;
-
-    let balance = Number(localStorage.getItem("balance_" + user)) || 0;
-    localStorage.setItem("balance_" + user, balance + amount);
-
-    localStorage.setItem("deposits", JSON.stringify(deposits));
-    alert("Approved!");
-    location.reload();
-}
-</script>
+<script src="admin.js"></script>
 </body>
 </html>
