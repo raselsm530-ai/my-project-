@@ -3,7 +3,7 @@ if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-// লগইন করা ইউজার ফিরিয়ে আনা
+// লগইন করা ইউজারের নাম্বার আনা
 let currentPhone = localStorage.getItem("currentUser");
 
 if (!currentPhone) {
@@ -11,16 +11,28 @@ if (!currentPhone) {
     window.location.href = "login.html";
 }
 
-let userData = JSON.parse(localStorage.getItem(currentPhone));
+// সব ইউজারদের লিস্ট আনা
+let users = JSON.parse(localStorage.getItem("users")) || [];
 
-// ওয়েলকাম টেক্সট দেখানো
+// লগইন করা ইউজার খোঁজা
+let userIndex = users.findIndex(u => u.phone === currentPhone);
+
+if (userIndex === -1) {
+    alert("ইউজার পাওয়া যায়নি!");
+    window.location.href = "login.html";
+}
+
+// ইউজারের পূর্ণ ডেটা
+let userData = users[userIndex];
+
+// ওয়েলকাম টেক্সট
 document.getElementById("welcomeText").innerText = "স্বাগতম, " + userData.phone;
 
-// ব্যালেন্স দেখানো (যদি না থাকে তবে 0 দেখাবে)
+// ব্যালেন্স দেখানো
 let balance = userData.balance ? userData.balance : 0;
 document.getElementById("balance").innerText = balance + " ৳";
 
-// লগআউট ফাংশন
+// লগআউট
 function logoutUser() {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("currentUser");
