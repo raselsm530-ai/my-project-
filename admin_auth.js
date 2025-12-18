@@ -1,26 +1,23 @@
 function adminLogin() {
-    let u = document.getElementById("adminUser").value;
-    let p = document.getElementById("adminPass").value;
+    let user = document.getElementById("adminUser").value.trim();
+    let pass = document.getElementById("adminPass").value.trim();
 
-    // FIXED ADMIN LOGIN
-    const adminUser = "admin";
-    const adminPass = "12345";
+    // Default Admin Credentials (hard-coded)
+    const defaultUser = "admin";
+    const defaultPass = "1234";
 
-    if (u === adminUser && p === adminPass) {
-        localStorage.setItem("adminLogged", "true");
-        window.location.href = "admin.html";
+    if (user === defaultUser && pass === defaultPass) {
+        localStorage.setItem("adminLoggedIn", "true");
+        alert("Admin Login Successful!");
+        window.location.href = "admin.html"; // Redirect to admin dashboard
     } else {
-        alert("❌ ভুল Username বা Password");
+        alert("Wrong Username or Password!");
     }
 }
 
-function checkAdmin() {
-    if (localStorage.getItem("adminLogged") !== "true") {
-        window.location.href = "admin_login.html"; 
-    }
-}
-
+// Admin Logout Function
 function adminLogout() {
-    localStorage.removeItem("adminLogged");
+    localStorage.removeItem("adminLoggedIn");
+    alert("Logged Out");
     window.location.href = "admin_login.html";
 }
