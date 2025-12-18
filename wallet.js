@@ -1,4 +1,3 @@
-// Fixed Deposit Numbers
 const fixedNumbers = {
     "Bkash": "01797632229",
     "Nagad": "01797632229",
@@ -15,16 +14,9 @@ function updateNumber() {
     }
 
     const num = fixedNumbers[method];
-    if (num) {
-        paymentNumber.textContent = method + ": " + num;
-    } else {
-        paymentNumber.textContent = "নাম্বার নেই";
-    }
+    paymentNumber.textContent = method + ": " + num;
 }
 
-// =====================
-// Deposit Function
-// =====================
 function depositMoney() {
     const amount = document.getElementById("depositAmount").value;
     const method = document.getElementById("paymentMethod").value;
@@ -46,13 +38,12 @@ function depositMoney() {
         date: new Date().toLocaleString()
     };
 
-    // Save to localStorage
     let allDeposits = JSON.parse(localStorage.getItem("userDeposits")) || [];
     allDeposits.push(deposit);
 
     localStorage.setItem("userDeposits", JSON.stringify(allDeposits));
 
-    alert("আপনার ডিপোজিট রিকোয়েস্ট Pending অবস্থায় আছে ❤️");
+    alert("আপনার ডিপোজিট Pending দেখাচ্ছে");
 
     document.getElementById("depositAmount").value = "";
     document.getElementById("paymentMethod").value = "";
