@@ -1,27 +1,19 @@
-document.addEventListener("DOMContentLoaded", () => {
-
-    const user = localStorage.getItem("currentUser");
+document.addEventListener("DOMContentLoaded", function () {
     const table = document.getElementById("historyTable");
 
-    let deposits = JSON.parse(localStorage.getItem("deposits")) || [];
+    // ডিপোজিট ডাটা LocalStorage থেকে আনো
+    let deposits = JSON.parse(localStorage.getItem("userDeposits")) || [];
 
-    let myDeposits = deposits.filter(d => d.user === user);
+    deposits.forEach(deposit => {
+        let row = document.createElement("tr");
 
-    if (myDeposits.length === 0) {
-        let row = table.insertRow();
-        let cell = row.insertCell(0);
-        cell.colSpan = 4;
-        cell.textContent = "কোনো ডিপোজিট নেই";
-        cell.style.textAlign = "center";
-        return;
-    }
+        row.innerHTML = `
+            <td>${deposit.amount} ৳</td>
+            <td>${deposit.method}</td>
+            <td class="${deposit.status.toLowerCase()}">${deposit.status}</td>
+            <td>${deposit.date}</td>
+        `;
 
-    myDeposits.forEach(deposit => {
-        let row = table.insertRow();
-        row.insertCell(0).textContent = deposit.amount + " ৳";
-        row.insertCell(1).textContent = deposit.method;
-        row.insertCell(2).textContent = deposit.status;
-        row.insertCell(3).textContent = deposit.time;
+        table.appendChild(row);
     });
-
 });
