@@ -11,22 +11,44 @@
             background: #eef2f7;
             padding: 20px;
             text-align: center;
+            min-height: 100vh;
+        }
+
+        h2 {
+            margin-bottom: 20px;
         }
 
         .info-box {
             background: white;
             padding: 18px;
-            margin: 10px 0;
+            margin: 10px auto;
             border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: left;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
         }
 
-        button {
-            padding: 10px;
+        .info-box button {
+            width: 100%;
+            padding: 12px;
             background: #4e73df;
             color: white;
             border-radius: 6px;
             border: none;
             cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .back-btn {
+            margin-top: 20px;
+            width: 90%;
+            max-width: 300px;
+            padding: 12px;
+            background: red;
+            color: white;
+            border-radius: 6px;
+            border: none;
         }
     </style>
 </head>
@@ -35,10 +57,9 @@
 
     <h2>Pending Deposits</h2>
 
-    <!-- এখানে ডিপোজিট show হবে -->
     <div id="depositList"></div>
 
-    <button onclick="location.href='admin.html'">Back</button>
+    <button class="back-btn" onclick="location.href='admin.html'">Back</button>
 
     <script src="admin.js"></script>
 
