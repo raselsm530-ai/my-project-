@@ -28,9 +28,20 @@ let userData = users[userIndex];
 // ওয়েলকাম টেক্সট
 document.getElementById("welcomeText").innerText = "স্বাগতম, " + userData.phone;
 
-// ব্যালেন্স দেখানো
-let balance = userData.balance ? userData.balance : 0;
+
+// ===============================
+//  UPDATED BALANCE SYSTEM
+// ===============================
+
+// সব ব্যালেন্স লোড
+let balances = JSON.parse(localStorage.getItem("balances")) || {};
+
+// ইউজারের ব্যালেন্স যদি না থাকে → 0
+let balance = balances[currentPhone] || 0;
+
+// UI তে দেখানো
 document.getElementById("balance").innerText = balance + " ৳";
+
 
 // লগআউট
 function logoutUser() {
