@@ -1,49 +1,31 @@
-// চেক করা ইউজার লগইন আছে কিনা
+// লগইন চেক
 if (localStorage.getItem("loggedIn") !== "true") {
     window.location.href = "login.html";
 }
 
-// লগইন করা ইউজারের নাম্বার আনা
-let currentPhone = localStorage.getItem("currentUser");
+let currentUser = localStorage.getItem("currentUser");
 
-if (!currentPhone) {
-    alert("ইউজার পাওয়া যায়নি! আবার লগইন করুন।");
-    window.location.href = "login.html";
-}
-
-// সব ইউজারদের লিস্ট আনা
+// সব ইউজার লোড
 let users = JSON.parse(localStorage.getItem("users")) || [];
 
-// লগইন করা ইউজার খোঁজা
-let userIndex = users.findIndex(u => u.phone === currentPhone);
+// ইউজার খুঁজে বের করা
+let user = users.find(u => u.phone === currentUser);
 
-if (userIndex === -1) {
+if (!user) {
     alert("ইউজার পাওয়া যায়নি!");
     window.location.href = "login.html";
 }
 
-// ইউজারের পূর্ণ ডেটা
-let userData = users[userIndex];
-
-// ওয়েলকাম টেক্সট
-document.getElementById("welcomeText").innerText = "স্বাগতম, " + userData.phone;
-
-
-// ===============================
-//  UPDATED BALANCE SYSTEM
-// ===============================
-
-// সব ব্যালেন্স লোড
+// ব্যালেন্স লোড
 let balances = JSON.parse(localStorage.getItem("balances")) || {};
 
-// ইউজারের ব্যালেন্স যদি না থাকে → 0
-let balance = balances[currentPhone] || 0;
+let balance = balances[currentUser] || 0;
 
 // UI তে দেখানো
+document.getElementById("welcomeText").innerText = "স্বাগতম, " + user.phone;
 document.getElementById("balance").innerText = balance + " ৳";
 
-
-// লগআউট
+// logout
 function logoutUser() {
     localStorage.removeItem("loggedIn");
     localStorage.removeItem("currentUser");
