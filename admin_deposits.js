@@ -1,42 +1,52 @@
-<!DOCTYPE html>
-<html lang="bn">
-<head>
-    <meta charset="UTF-8">
-    <title>Pending Deposits</title>
+function loadDeposits() {
+    let deposits = JSON.parse(localStorage.getItem("deposits")) || [];
 
-    <style>
-        body {
-            background: #1e1e1e;
-            color: white;
-            text-align: center;
-            padding: 20px;
-        }
+    let pending = deposits.filter(d => d.status === "Pending");
 
-        .card {
-            border: 1px solid #555;
-            padding: 12px;
-            margin: 10px;
-            border-radius: 6px;
-            background: #2c2c2c;
-        }
+    let html = "";
 
-        button {
-            padding: 5px 12px;
-            border: none;
-            background: green;
-            color: white;
-            border-radius: 5px;
-        }
-    </style>
-</head>
+    if (pending.length === 0) {
+        document.getElementById("depositList").innerHTML = "<p>No Pending Deposits</p>";
+        return;
+    }
 
-<body>
+    pending.forEach((d, i) => {
+        html += `
+        <div class="card">
+            <p>📌 User: ${d.user}</p>
+            <p>💰 Amount: ${d.amount} ৳</p>
+            <p>💳 Method: ${d.method}</p>
+            <p>⏱ Date: ${d.time}</p>
 
-<h2>Pending Deposit Requests</h2>
+            <button onclick="approveDeposit('${d.user}', ${i})">Approve</button>
+        </div>
+        `;
+    });
 
-<div id="depositList"></div>
+    document.getElementById("depositList").innerHTML = html;
+}
 
-<script src="admin_deposits.js"></script>
+function approveDeposit(phone, i) {
+    let deposits = JSON.parse(localStorage.getItem("deposits")) || [];
+    let users = JSON.parse(localStorage.getItem("users")) || [];
 
-</body>
-</html>
+    let pending = deposits.filter(d => d.status === "Pending");
+
+    let dep = pending[i];
+
+    // update status
+    let actualIndex = deposits.findIndex(d => d.time === dep.time && d.user === dep.user);
+    deposits[actualIndex].status = "Approved";
+
+    let user = users.find(u => u.phone === phone);
+
+    user.balance += dep.amount;
+
+    localStorage.setItem("deposits", JSON.stringify(deposits));
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Deposit Approved!");
+    loadDeposits();
+}
+
+loadDeposits();
