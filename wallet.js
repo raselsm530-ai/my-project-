@@ -20,7 +20,6 @@ function updateNumber() {
 function depositMoney() {
     const amount = document.getElementById("depositAmount").value;
     const method = document.getElementById("paymentMethod").value;
-    const user = localStorage.getItem("currentUser");
 
     if (!amount || amount <= 0) {
         alert("সঠিক এমাউন্ট লিখুন");
@@ -33,17 +32,16 @@ function depositMoney() {
     }
 
     const deposit = {
-        user: user,  // ⭐ USER TRACKING
-        amount: amount,
-        method: method,
+        amount,
+        method,
         status: "Pending",
         date: new Date().toLocaleString()
     };
 
-    let allDeposits = JSON.parse(localStorage.getItem("deposits")) || [];
+    let allDeposits = JSON.parse(localStorage.getItem("userDeposits")) || [];
     allDeposits.push(deposit);
 
-    localStorage.setItem("deposits", JSON.stringify(allDeposits));
+    localStorage.setItem("userDeposits", JSON.stringify(allDeposits));
 
     alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে!\nস্ট্যাটাস: Pending");
 
