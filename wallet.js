@@ -31,18 +31,18 @@ function depositMoney() {
         return;
     }
 
-    // এখানে ইউজার নাম্বার নেওয়া হচ্ছে
-    const user = localStorage.getItem("loggedInUser");
+    // এখানে সঠিকভাবে user number নেওয়া হচ্ছে
+    const user = localStorage.getItem("currentUser");
 
     const deposit = {
-        user: user,            // user show হবে admin panel এ
+        user: user,            // admin panel এ দেখাবে
         amount: Number(amount),
         method,
-        status: "pending",     // lowercase to match admin.js
+        status: "pending",
         date: new Date().toLocaleString()
     };
 
-    // pendingDeposits এ সেভ হবে
+    // save deposit request
     let allDeposits = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
     allDeposits.push(deposit);
 
@@ -50,6 +50,7 @@ function depositMoney() {
 
     alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে!\nস্ট্যাটাস: Pending");
 
+    // Reset input
     document.getElementById("depositAmount").value = "";
     document.getElementById("paymentMethod").value = "";
     document.getElementById("paymentNumber").textContent = "মেথড নির্বাচন করুন";
