@@ -15,7 +15,7 @@ function loadPendingDeposits() {
             <p>📱 User: ${d.user}</p>
             <p>💰 Amount: ${d.amount} ৳</p>
             <p>🏦 Method: ${d.method}</p>
-            <p>📝 TrxID: ${d.trxid || "N/A"}</p>
+            <p>📝 TrxID: ${d.trxid}</p>
             <p>⏱ Date: ${d.date}</p>
 
             <button class="approve" onclick="approveDeposit(${index})">Approve</button>
@@ -25,25 +25,27 @@ function loadPendingDeposits() {
 
 function approveDeposit(index) {
     let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
-
     const deposit = pending[index];
 
-    // balance update
+    // get users list
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
+    // find user using phone number
     let userIndex = users.findIndex(u => u.phone === deposit.user);
 
     if (userIndex !== -1) {
+        // update balance
         users[userIndex].balance = Number(users[userIndex].balance || 0) + Number(deposit.amount);
     }
 
+    // save updated user list
     localStorage.setItem("users", JSON.stringify(users));
 
-    // remove pending
+    // remove pending deposit
     pending.splice(index, 1);
     localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
-    alert("Deposit Approved + Balance Updated!");
+    alert("Deposit Approved & Balance Updated Successfully!");
     loadPendingDeposits();
 }
 
