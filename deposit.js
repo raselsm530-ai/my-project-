@@ -1,13 +1,7 @@
-const fixedNumbers = {
-    "bkash": "01797632229",
-    "nagad": "01797632229",
-    "rocket": "01797632229"
-};
-
 function depositMoney() {
     const amount = document.getElementById("depositAmount").value;
     const method = document.getElementById("paymentMethod").value;
-    const trxid = document.getElementById("trxid").value;
+    const trx = document.getElementById("trxid").value;
 
     if (!amount || amount <= 0) {
         alert("সঠিক এমাউন্ট লিখুন");
@@ -19,26 +13,28 @@ function depositMoney() {
         return;
     }
 
-    if (!trxid) {
-        alert("TrxID দিন");
+    if (!trx) {
+        alert("TrxID লিখুন");
         return;
     }
 
+    // FIXED: user must be fetched correctly
     const user = localStorage.getItem("currentUser");
 
     const deposit = {
-        user,
+        user: user,         // username / phone
         amount: Number(amount),
-        method,
-        trxid,
+        method: method.toLowerCase(),
+        trx: trx,
         status: "pending",
         date: new Date().toLocaleString()
     };
 
-    let allDeposits = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
-    allDeposits.push(deposit);
+    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
 
-    localStorage.setItem("pendingDeposits", JSON.stringify(allDeposits));
+    pending.push(deposit);
+
+    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
     alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে (Pending)");
 
