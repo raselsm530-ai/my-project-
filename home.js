@@ -1,32 +1,19 @@
-// ===== Home Page Balance Show =====
+window.onload = function () {
 
-// login করা user
-let user = localStorage.getItem("currentUser");
+    const user = localStorage.getItem("currentUser");
 
-// যদি login না থাকে
-if (!user) {
-    location.href = "login.html";
-}
+    // Welcome text
+    document.getElementById("welcomeText").textContent = "স্বাগতম, " + user;
 
-// balance key
-let balanceKey = "balance_" + user;
+    let balances = JSON.parse(localStorage.getItem("balances")) || {};
 
-// balance read
-let balance = localStorage.getItem(balanceKey);
+    let balance = balances[user] || 0;
 
-// null হলে 0 দেখাবে
-if (balance === null) {
-    balance = 0;
-}
+    document.getElementById("balance").textContent = balance + " ৳";
+};
 
-// UI তে show
-document.getElementById("balance").innerText = balance + " ৳";
-
-// welcome text
-document.getElementById("welcomeText").innerText = "স্বাগতম, " + user;
-
-// logout
 function logoutUser() {
     localStorage.removeItem("currentUser");
-    location.href = "login.html";
+    alert("লগআউট সফল হয়েছে");
+    window.location.href = "login.html";
 }
