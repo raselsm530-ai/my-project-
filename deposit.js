@@ -14,7 +14,7 @@ function depositMoney() {
         user: user,
         amount: Number(amount),
         method: method,
-        time: new Date().toLocaleString() // 👍 Perfect
+        time: new Date().toLocaleString()
     });
 
     localStorage.setItem("pendingDeposits", JSON.stringify(deposits));
