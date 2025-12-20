@@ -1,64 +1,38 @@
-// লগইন চেক
-if (localStorage.getItem("adminLoggedIn") !== "true") {
-    window.location.href = "admin_login.html";
-}
+function loadPendingDeposits() {
+    const table = document.getElementById("pendingTable");
 
-// pending deposits লোড
-let pendingDeposits = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
+    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
 
-// balances লোড
-let balances = JSON.parse(localStorage.getItem("balances")) || {};
+    table.innerHTML = "";
 
-// pending deposit দেখানো
-function loadDeposits() {
-    let container = document.getElementById("pendingDeposits");
-
-    container.innerHTML = "";
-
-    if (pendingDeposits.length === 0) {
-        container.innerHTML = "<p>No pending deposits!</p>";
-        return;
-    }
-
-    pendingDeposits.forEach((dep, index) => {
-        let div = document.createElement("div");
-        div.className = "deposit-card";
-
-        div.innerHTML = `
-            <p>User: ${dep.user}</p>
-            <p>Amount: ${dep.amount} ৳</p>
-            <p>Method: ${dep.method}</p>
-            <p>Date: ${dep.date}</p>
-            <button onclick="approveDeposit(${index})">Approve</button>
-        `;
-
-        container.appendChild(div);
+    pending.forEach((d, index) => {
+        table.innerHTML += `
+        <tr>
+            <td>${d.user}</td>
+            <td>${d.amount}</td>
+            <td>${d.method}</td>
+            <td>${d.trxid}</td>
+            <td>${d.date}</td>
+            <td><button onclick="approveDeposit(${index})">Approve</button></td>
+        </tr>`;
     });
 }
 
-loadDeposits();
-
-// Approve Deposit
 function approveDeposit(index) {
-    let deposit = pendingDeposits[index];
+    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
+    const deposit = pending[index];
 
-    if (!balances[deposit.user]) {
-        balances[deposit.user] = 0;
-    }
-
-    balances[deposit.user] += deposit.amount;
-
-    pendingDeposits.splice(index, 1);
+    let balances = JSON.parse(localStorage.getItem("balances")) || {};
+    balances[deposit.user] = (balances[deposit.user] || 0) + deposit.amount;
 
     localStorage.setItem("balances", JSON.stringify(balances));
-    localStorage.setItem("pendingDeposits", JSON.stringify(pendingDeposits));
 
-    alert("Deposit Approved!");
-    loadDeposits();
+    pending.splice(index, 1);
+    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
+
+    alert("Deposit Approved & Balance Added!");
+
+    loadPendingDeposits();
 }
 
-// Logout
-function adminLogout() {
-    localStorage.removeItem("adminLoggedIn");
-    window.location.href = "admin_login.html";
-}
+loadPendingDeposits();
