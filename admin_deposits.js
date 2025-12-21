@@ -28,18 +28,21 @@ function approveDeposit(index) {
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    // FIX → user matching
+    // FIXED USER MATCH
     let userIndex = users.findIndex(u => u.phone == deposit.user);
 
-    if (userIndex !== -1) {
-        users[userIndex].balance = (Number(users[userIndex].balance) || 0) + Number(deposit.amount);
-
-        localStorage.setItem("users", JSON.stringify(users));
-    } else {
+    if (userIndex === -1) {
         alert("User Not Found!");
         return;
     }
 
+    // FIXED BALANCE UPDATE
+    users[userIndex].balance = Number(users[userIndex].balance || 0) + Number(deposit.amount);
+
+    // SAVE UPDATED USERS
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // REMOVE PENDING ITEM
     pending.splice(index, 1);
     localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
