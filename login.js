@@ -5,6 +5,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     let password = document.getElementById("password").value.trim();
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
+
     let user = users.find(u => u.phone === phone);
 
     if (!user) {
@@ -17,9 +18,8 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         return;
     }
 
-    // store only phone & full user data
     localStorage.setItem("currentUser", phone);
-    localStorage.setItem("currentUserData", JSON.stringify(user));
 
+    alert("Login Success!");
     window.location.href = "home.html";
 });
