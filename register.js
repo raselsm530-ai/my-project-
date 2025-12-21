@@ -3,26 +3,48 @@ document.getElementById("registerForm").addEventListener("submit", function(e) {
 
     let phone = document.getElementById("phone").value.trim();
     let password = document.getElementById("password").value.trim();
+    let confirmPassword = document.getElementById("confirmPassword").value.trim();
+    let withdrawPin = document.getElementById("withdrawPin").value.trim();
+    let refCode = document.getElementById("inviteCode").value.trim();
+
+    if (phone.length !== 11 || !phone.startsWith("01")) {
+        alert("সঠিক মোবাইল নম্বর দিন");
+        return;
+    }
+
+    if (password !== confirmPassword) {
+        alert("পাসওয়ার্ড মিলছে না");
+        return;
+    }
+
+    if (withdrawPin.length !== 4) {
+        alert("৪ সংখ্যার পিন দিন");
+        return;
+    }
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
     if (users.some(u => u.phone === phone)) {
-        alert("এই নাম্বার দিয়ে অ্যাকাউন্ট আগে থেকেই আছে!");
+        alert("এই নম্বরে আগেই একাউন্ট আছে");
         return;
     }
 
     const newUser = {
-        phone: phone,
-        password: password,
+        phone,
+        password,
+        withdrawPin,
+        refCode: refCode || "NO-REF",
         balance: 0
     };
 
     users.push(newUser);
 
     localStorage.setItem("users", JSON.stringify(users));
-    localStorage.setItem("currentUser", phone); // <-- এই লাইনটাই আসল
 
-    alert("রেজিস্ট্রেশন সম্পন্ন!");
+    // MAIN FIX ✔️
+    localStorage.setItem("currentUser", phone);
+    localStorage.setItem("currentUserData", JSON.stringify(newUser));
 
-    window.location.href = "home.html";
+    alert("রেজিস্ট্রেশন সফল 🎉 এখন লগইন করুন");
+    window.location.href = "login.html";
 });
