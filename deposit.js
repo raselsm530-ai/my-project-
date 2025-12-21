@@ -14,27 +14,27 @@ function depositMoney() {
         return;
     }
 
-    const user = JSON.parse(localStorage.getItem("currentUserData"));
+    const currentUser = JSON.parse(localStorage.getItem("currentUserData"));
 
-    if (!user) {
+    if (!currentUser) {
         alert("Please Login First!");
         return;
     }
 
     const deposit = {
-        user: user.phone,     // FIXED ✔
+        user: currentUser.phone,
         amount: Number(amount),
         method: method,
-        number: fixedNumbers[method], // FIXED ✔
-        trxid: trxid,                 // FIXED ✔
+        number: fixedNumbers[method],  // FIXED
+        trxid: trxid,                  // FIXED
         status: "pending",
         date: new Date().toLocaleString()
     };
 
-    let pendingList = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
-    pendingList.push(deposit);
+    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
+    pending.push(deposit);
 
-    localStorage.setItem("pendingDeposits", JSON.stringify(pendingList));
+    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
     alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে (Pending)");
 
