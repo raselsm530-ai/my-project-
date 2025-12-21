@@ -20,15 +20,15 @@ function depositMoney() {
         return;
     }
 
-    const user = localStorage.getItem("currentUser");
+    const currentUser = localStorage.getItem("currentUser");
 
-    if (!user) {
-        alert("Please Login!");
+    if (!currentUser) {
+        alert("Login First!");
         return;
     }
 
     const deposit = {
-        user: user,                    // PHONE NUMBER ONLY ✔️
+        user: currentUser,
         amount: Number(amount),
         method: method,
         number: fixedNumbers[method],
@@ -41,8 +41,8 @@ function depositMoney() {
 
     localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
-    alert("Deposit Sent!");
-
+    alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে!");
+    
     document.getElementById("depositAmount").value = "";
     document.getElementById("paymentMethod").value = "";
     document.getElementById("trxid").value = "";
