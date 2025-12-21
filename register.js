@@ -34,7 +34,7 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
         password,
         withdrawPin,
         refCode: refCode || "NO-REF",
-        balance: 0  // 🟢 default balance added
+        balance: 0
     });
 
     localStorage.setItem("users", JSON.stringify(users));
