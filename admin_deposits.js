@@ -1,5 +1,6 @@
 function loadPendingDeposits() {
     let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
+
     const list = document.getElementById("depositList");
     list.innerHTML = "";
 
@@ -8,14 +9,14 @@ function loadPendingDeposits() {
         return;
     }
 
-    pending.forEach((d, index) => {
+    pending.forEach((deposit, index) => {
         list.innerHTML += `
         <div class="box">
-            <p>📱 User: ${d.user}</p>
-            <p>💰 Amount: ${d.amount} ৳</p>
-            <p>🏦 Method: ${d.method}</p>
-            <p>📝 TrxID: ${d.trxid}</p>
-            <p>⏱ Date: ${d.date}</p>
+            <p>📱 User: ${deposit.user}</p>
+            <p>💰 Amount: ${deposit.amount} ৳</p>
+            <p>🏦 Method: ${deposit.method}</p>
+            <p>📝 TrxID: ${deposit.trxid}</p>
+            <p>⏱ Date: ${deposit.date}</p>
 
             <button class="approve" onclick="approveDeposit(${index})">Approve</button>
         </div>`;
@@ -24,25 +25,27 @@ function loadPendingDeposits() {
 
 function approveDeposit(index) {
     let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
-    let deposit = pending[index];
-
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    let userIndex = users.findIndex(u => u.phone === deposit.user);
+    const deposit = pending[index];
+
+    const userIndex = users.findIndex(user => user.phone == deposit.user);
 
     if (userIndex !== -1) {
-        users[userIndex].balance = (Number(users[userIndex].balance) || 0) + Number(deposit.amount);
+
+        users[userIndex].balance = Number(users[userIndex].balance || 0) + Number(deposit.amount);
+
         localStorage.setItem("users", JSON.stringify(users));
+
+        pending.splice(index, 1);
+        localStorage.setItem("pendingDeposits", JSON.stringify(pending));
+
+        alert("✔ Deposit Approved & Balance Updated!");
+
+        loadPendingDeposits();
     } else {
-        alert("User Not Found!");
-        return;
+        alert("❌ User Not Found! (Check signup / currentUser)");
     }
-
-    pending.splice(index, 1);
-    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
-
-    alert("Deposit Approved! Balance Updated.");
-    loadPendingDeposits();
 }
 
 loadPendingDeposits();
