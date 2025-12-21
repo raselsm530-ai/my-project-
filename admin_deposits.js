@@ -10,42 +10,37 @@ function loadPendingDeposits() {
     }
 
     pending.forEach((dep, index) => {
-        const div = document.createElement("div");
-        div.className = "deposit-box";
-
-        div.innerHTML = `
-            <p><strong>ইউজার:</strong> ${dep.user}</p>
-            <p><strong>Amount:</strong> ${dep.amount} ৳</p>
-            <p><strong>Method:</strong> ${dep.method}</p>
-            <p><strong>Send To:</strong> ${dep.number}</p>
-            <p><strong>TrxID:</strong> ${dep.trxid}</p>
-            <button onclick="approve(${index})" class="approve-btn">Approve</button>
-            <button onclick="reject(${index})" class="reject-btn">Reject</button>
-            <hr>
+        depositList.innerHTML += `
+            <div class="deposit-box">
+                <p><strong>ইউজার:</strong> ${dep.user}</p>
+                <p><strong>Amount:</strong> ${dep.amount} ৳</p>
+                <p><strong>Method:</strong> ${dep.method}</p>
+                <p><strong>Send To:</strong> ${dep.number}</p>
+                <p><strong>TrxID:</strong> ${dep.trxid}</p>
+                <button onclick="approve(${index})" class="approve-btn">Approve</button>
+                <button onclick="reject(${index})" class="reject-btn">Reject</button>
+            </div>
         `;
-
-        depositList.appendChild(div);
     });
 }
 
 function approve(index) {
     let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
-    const deposit = pending[index];
+    const dep = pending[index];
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
+    let i = users.findIndex(u => u.phone === dep.user);
 
-    const userIndex = users.findIndex(u => u.phone === deposit.user);
-
-    if (userIndex !== -1) {
-        users[userIndex].balance = Number(users[userIndex].balance) + Number(deposit.amount);
+    if (i !== -1) {
+        users[i].balance = Number(users[i].balance) + Number(dep.amount);
     }
 
     localStorage.setItem("users", JSON.stringify(users));
-
+    
     pending.splice(index, 1);
     localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
-    alert("Deposit Approved");
+    alert("Approved");
     loadPendingDeposits();
 }
 
@@ -55,7 +50,7 @@ function reject(index) {
     pending.splice(index, 1);
     localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
-    alert("Deposit Rejected");
+    alert("Rejected");
     loadPendingDeposits();
 }
 
