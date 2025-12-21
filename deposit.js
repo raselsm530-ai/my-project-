@@ -1,7 +1,7 @@
 const fixedNumbers = {
-    "Bkash": "01797632229",
-    "Nagad": "01797632229",
-    "Rocket": "01797632229"
+    "bkash": "01797632229",
+    "nagad": "01797632229",
+    "rocket": "01797632229"
 };
 
 function depositMoney() {
@@ -16,11 +16,17 @@ function depositMoney() {
 
     const user = localStorage.getItem("currentUser");
 
+    if (!user) {
+        alert("Please Login First!");
+        return;
+    }
+
     const deposit = {
         user: user,
         amount: Number(amount),
         method: method,
         trxid: trxid,
+        number: fixedNumbers[method], // ← FIXED NUMBER ADDED
         status: "pending",
         date: new Date().toLocaleString()
     };
