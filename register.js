@@ -1,4 +1,7 @@
-document.getElementById("registerForm").addEventListener("submit", async function(e) {
+import { db } from "./firebase-config.js";
+import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
+
+document.getElementById("registerForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
     let phone = document.getElementById("phone").value.trim();
@@ -7,36 +10,30 @@ document.getElementById("registerForm").addEventListener("submit", async functio
     let withdrawPin = document.getElementById("withdrawPin").value.trim();
     let refCode = document.getElementById("inviteCode").value.trim();
 
-    // Validation
     if (phone.length !== 11 || !phone.startsWith("01")) {
-        alert("সঠিক মোবাইল নম্বর দিন");
+        alert("সঠিক মোবাইল নম্বর দিন!");
         return;
     }
 
     if (password !== confirmPassword) {
-        alert("পাসওয়ার্ড মিলছে না");
+        alert("পাসওয়ার্ড মিলছে না!");
         return;
     }
 
     if (withdrawPin.length !== 4) {
-        alert("৪ সংখ্যার পিন দিন");
+        alert("৪ সংখ্যার উত্তোলন পিন দিন!");
         return;
     }
 
-    // Firebase DB Reference
-    const userRef = window.ref(window.db, "users/" + phone);
-
-    // Check if already exists
-    const snapshot = await import("https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js")
-        .then(module => module.get(userRef));
+    const dbRef = ref(db);
+    const snapshot = await get(child(dbRef, `users/${phone}`));
 
     if (snapshot.exists()) {
-        alert("এই নম্বরে আগেই একাউন্ট আছে");
+        alert("এই নম্বরে আগেই অ্যাকাউন্ট আছে!");
         return;
     }
 
-    // New user data
-    const newUser = {
+    const userData = {
         phone,
         password,
         withdrawPin,
@@ -44,20 +41,9 @@ document.getElementById("registerForm").addEventListener("submit", async functio
         balance: 0
     };
 
-    // Save to firebase
-    window.set(userRef, newUser)
-        .then(() => {
-            alert("রেজিস্ট্রেশন সফল 🎉");
+    await set(ref(db, `users/${phone}`), userData);
 
-            // Save current user locally (optional)
-            localStorage.setItem("currentUser", phone);
-            localStorage.setItem("currentUserData", JSON.stringify(newUser));
+    alert("রেজিস্ট্রেশন সফল 🎉 এখন লগইন করুন");
 
-            window.location.href = "login.html";
-        })
-        .catch((error) => {
-            alert("কিছু সমস্যা হয়েছে ❌");
-            console.log(error);
-        });
-
+    window.location.href = "login.html";
 });
