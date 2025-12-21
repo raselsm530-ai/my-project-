@@ -4,9 +4,10 @@ window.onload = function () {
 
     document.getElementById("welcomeText").textContent = "স্বাগতম, " + user;
 
-    let balances = JSON.parse(localStorage.getItem("balances")) || {};
+    // Load user data after deposit approval
+    let userData = JSON.parse(localStorage.getItem("currentUserData")) || {};
 
-    let balance = balances[user] || 0;
+    let balance = userData.balance || 0;
 
     document.getElementById("balance").textContent = balance + " ৳";
 };
