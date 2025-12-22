@@ -1,46 +1,37 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Wallet Deposit</title>
-<link rel="stylesheet" href="wallet.css">
+    <meta charset="UTF-8">
+    <title>ওয়ালেট</title>
+    <link rel="stylesheet" href="wallet.css">
 </head>
-
 <body>
 
 <div class="wallet-container">
 
-<h2>💰 ডিপোজিট করুন</h2>
+    <h2 class="title">ডিপোজিট করুন</h2>
 
-<div class="amount-section">
-    <div class="amount-card" data-amount="500">৳500</div>
-    <div class="amount-card" data-amount="3000">৳3000</div>
-    <div class="amount-card" data-amount="5000">৳5000</div>
-    <div class="amount-card" data-amount="10000">৳10000</div>
-</div>
+    <div id="amounts" class="amount-box">
+        <div class="amount" data-amount="500">500</div>
+        <div class="amount" data-amount="3000">3000</div>
+        <div class="amount" data-amount="5000">5000</div>
+        <div class="amount" data-amount="10000">10000</div>
+    </div>
 
-<select id="methodSelect">
-    <option value="">পেমেন্ট সিলেক্ট করুন</option>
-    <option value="bKash">বিকাশ</option>
-    <option value="Nagad">নগদ</option>
-    <option value="Rocket">রকেট</option>
-</select>
+    <div class="selected-amount-display">
+        সিলেক্টেড এমাউন্ট: <span id="selectedAmountText">0</span> টাকা
+    </div>
 
-<p class="payment-info">
-আপনি সিলেক্ট করেছেন:
-<br> Amount: ৳<span id="selectedAmount">0</span>
-<br> Method: <span id="selectedMethod">None</span>
-<br> Payment Number: <span id="paymentNumber"></span>
-</p>
+    <select id="method" class="pay-method">
+        <option>বিকাশ</option>
+        <option>নগদ</option>
+        <option>রকেট</option>
+    </select>
 
-<input type="file" id="screenshot" accept="image/*">
-
-<button onclick="makeDeposit()">ডিপোজিট সাবমিট</button>
+    <button onclick="startDeposit()">কনফার্ম ডিপোজিট</button>
 
 </div>
 
-<script type="module" src="firebase-config.js"></script>
 <script type="module" src="wallet.js"></script>
-
 </body>
 </html>
