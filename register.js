@@ -2,29 +2,37 @@ import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 import { ref, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
-window.register = function () {
-    let phone = document.getElementById("phone").value;
-    let pass = document.getElementById("password").value;
+document.getElementById("registerForm").addEventListener("submit", (e) => {
+    e.preventDefault();
 
-    if (!phone || !pass) {
-        alert("সব তথ্য পূরণ করুন");
+    const phone = document.getElementById("phone").value;
+    const pass = document.getElementById("password").value;
+    const confirmPass = document.getElementById("confirmPassword").value;
+    const pin = document.getElementById("pin").value;
+    const refer = document.getElementById("refer").value;
+
+    if (pass !== confirmPass) {
+        alert("Password mismatch!");
         return;
     }
 
-    let email = phone + "@smart.com"; // custom email format
+    const email = phone + "@gmail.com";
 
     createUserWithEmailAndPassword(auth, email, pass)
-        .then((res) => {
-            set(ref(db, "users/" + res.user.uid), {
+        .then((userCredential) => {
+            const user = userCredential.user;
+
+            set(ref(db, "users/" + user.uid), {
                 phone: phone,
-                balance: 0,
-                status: "active"
+                pin: pin,
+                refer: refer,
+                balance: 0
             });
 
-            alert("রেজিস্ট্রেশন সফল!");
-            window.location.href = "login.html";
+            alert("Registration Successful!");
+            window.location.href = "index.html";
         })
-        .catch((err) => {
-            alert(err.message);
+        .catch((error) => {
+            alert(error.message);
         });
-};
+});
