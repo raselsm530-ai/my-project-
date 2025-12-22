@@ -7,23 +7,20 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="register-box">
+        <h2>রেজিস্টার</h2>
 
-<div class="register-box">
-    <h2>রেজিস্টার</h2>
+        <input type="tel" id="phone" placeholder="মোবাইল নাম্বার">
+        <input type="password" id="password" placeholder="পাসওয়ার্ড">
+        <input type="password" id="cpassword" placeholder="কনফার্ম পাসওয়ার্ড">
+        <input type="number" id="pin" placeholder="উইথড্র পিন (৪ সংখ্যা)">
+        <input type="text" id="refer" placeholder="রেফার কোড (ঐচ্ছিক)">
 
-    <input type="tel" id="phone" placeholder="মোবাইল নাম্বার">
-    <input type="password" id="password" placeholder="পাসওয়ার্ড">
-    <input type="password" id="cpassword" placeholder="কনফার্ম পাসওয়ার্ড">
-    <input type="number" id="pin" placeholder="উইথড্র পিন (৪ সংখ্যা)">
-    <input type="text" id="refer" placeholder="রেফার কোড (ঐচ্ছিক)">
+        <button type="button" onclick="register()">রেজিস্টার</button>
+        <p style="margin-top:15px">ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="login.html">লগইন</a></p>
+    </div>
 
-    <button type="button" onclick="register()">রেজিস্টার</button>
-
-    <p>ইতিমধ্যে অ্যাকাউন্ট আছে? <a href="login.html">লগইন</a></p>
-</div>
-
-<script type="module" src="firebase-config.js"></script>
-<script type="module" src="register.js"></script>
-
+    <script type="module" src="firebase-config.js"></script>
+    <script type="module" src="register.js"></script>
 </body>
 </html>
