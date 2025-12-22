@@ -1,49 +1,35 @@
-import { db } from "./firebase-config.js";
-import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-database.js";
+import { auth, db } from "./firebase-config.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-document.getElementById("registerForm").addEventListener("submit", async function (e) {
-    e.preventDefault();
+const register = () => {
 
-    let phone = document.getElementById("phone").value.trim();
-    let password = document.getElementById("password").value.trim();
-    let confirmPassword = document.getElementById("confirmPassword").value.trim();
-    let withdrawPin = document.getElementById("withdrawPin").value.trim();
-    let refCode = document.getElementById("inviteCode").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const pass = document.getElementById("password").value.trim();
 
-    if (phone.length !== 11 || !phone.startsWith("01")) {
-        alert("সঠিক মোবাইল নম্বর দিন!");
+    if (phone === "" || pass === "") {
+        alert("সব ঘর পূরণ করুন");
         return;
     }
 
-    if (password !== confirmPassword) {
-        alert("পাসওয়ার্ড মিলছে না!");
-        return;
-    }
+    // Firebase email trick
+    const email = phone + "@app.com";
 
-    if (withdrawPin.length !== 4) {
-        alert("৪ সংখ্যার উত্তোলন পিন দিন!");
-        return;
-    }
+    createUserWithEmailAndPassword(auth, email, pass)
+        .then(user => {
 
-    const dbRef = ref(db);
-    const snapshot = await get(child(dbRef, `users/${phone}`));
+            set(ref(db, "users/" + phone), {
+                phone: phone,
+                balance: 0,
+                joined: new Date().toLocaleString()
+            });
 
-    if (snapshot.exists()) {
-        alert("এই নম্বরে আগেই অ্যাকাউন্ট আছে!");
-        return;
-    }
+            alert("রেজিস্ট্রেশন সফল 👍");
+            location.href = "login.html";
+        })
+        .catch(err => {
+            alert("Error: " + err.message);
+        });
+};
 
-    const userData = {
-        phone,
-        password,
-        withdrawPin,
-        refCode: refCode || "NO-REF",
-        balance: 0
-    };
-
-    await set(ref(db, `users/${phone}`), userData);
-
-    alert("রেজিস্ট্রেশন সফল 🎉 এখন লগইন করুন");
-
-    window.location.href = "login.html";
-});
+window.register = register;
