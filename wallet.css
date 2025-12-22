@@ -8,31 +8,25 @@ body {
     font-family: Arial;
 }
 
-.wallet-container {
-    width: 92%;
-    max-width: 420px;
-    background: #ffffff;
+.container {
+    width: 94%;
+    max-width: 450px;
+    background: white;
     padding: 22px;
-    border-radius: 18px;
-    box-shadow: 0 6px 25px rgba(0,0,0,0.2);
+    border-radius: 15px;
 }
 
-.title {
-    text-align: center;
-    margin-bottom: 18px;
-}
-
-.amount-box {
+.amount-area {
     display: grid;
     grid-template-columns: repeat(2,1fr);
-    gap: 10px;
+    gap: 12px;
 }
 
 .amount {
     padding: 16px;
-    background: #eef2ff;
+    border-radius: 10px;
     border: none;
-    border-radius: 12px;
+    background: #eef2ff;
     font-size: 18px;
 }
 
@@ -41,11 +35,11 @@ body {
     color: white;
 }
 
-.info-card {
+.info {
     background: #eef2ff;
     padding: 14px;
-    border-radius: 10px;
     margin-top: 12px;
+    border-radius: 10px;
     text-align: center;
 }
 
@@ -53,15 +47,15 @@ body {
     display: none;
 }
 
-.select-method, .deposit-btn {
+select, .submit {
     width: 100%;
-    margin-top: 14px;
     padding: 14px;
+    margin-top: 14px;
     border-radius: 10px;
     border: none;
 }
 
-.deposit-btn {
+.submit {
     background: #3d5af1;
     color: white;
     font-size: 18px;
