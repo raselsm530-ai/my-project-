@@ -1,8 +1,9 @@
-// firebase-config.js
+// Import Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
 import { getAuth } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
 
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyCH_qTmU7QIUC4RKoYEX7QaXpPUNSN8mBI",
   authDomain: "smart-earning-platform-bd.firebaseapp.com",
@@ -14,6 +15,7 @@ const firebaseConfig = {
   measurementId: "G-ZQ5BT4LT2D"
 };
 
+// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getDatabase(app);
