@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="bn">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>হোম</title>
-    <link rel="stylesheet" href="style.css">
+
+    <link rel="stylesheet" href="home.css" />
 </head>
-<body class="home">
 
-<div class="home-header">
-    <h2 id="welcomeText">স্বাগতম</h2>
-</div>
+<body>
 
-<div class="balance-box">
-    <p>বর্তমান ব্যালেন্স</p>
-    <h2 id="balance">0 ৳</h2>
-</div>
+    <!-- Header -->
+    <div class="header">
+        <h2 id="welcomeUser">স্বাগতম</h2>
+    </div>
 
-<div class="grid-menu">
-    <div class="menu-card" onclick="location.href='wallet.html'">
-        <h4>ওয়ালেট</h4>
-        <p>টাকা যোগ করুন</p>
+    <!-- Balance -->
+    <div class="balance-card">
+        <p>বর্তমান ব্যালেন্স</p>
+        <h1 id="balance">৳ 0</h1>
     </div>
-    <div class="menu-card" onclick="location.href='package.html'">
-        <h4>প্যাকেজ</h4>
-        <p>কিনুন</p>
-    </div>
-    <div class="menu-card" onclick="location.href='withdraw.html'">
-        <h4>টাকা উত্তোলন</h4>
-        <p>ব্যালেন্স তুলুন</p>
-    </div>
-    <div class="menu-card logout" onclick="logoutUser()">
-        <h4>লগআউট</h4>
-        <p>অ্যাকাউন্ট থেকে বের হন</p>
-    </div>
-</div>
 
-<script src="home.js"></script>
+    <!-- Menu -->
+    <div class="menu-grid">
+
+        <div class="menu-btn" onclick="location.href='wallet.html'">
+            💰 ওয়ালেট
+        </div>
+
+        <div class="menu-btn" onclick="location.href='package.html'">
+            🎁 প্যাকেজ
+        </div>
+
+        <div class="menu-btn" onclick="location.href='withdraw.html'">
+            💵 উইথড্র
+        </div>
+
+        <div class="menu-btn" onclick="location.href='history.html'">
+            📜 হিস্টরি
+        </div>
+
+        <div class="menu-btn" onclick="location.href='profile.html'">
+            👤 প্রোফাইল
+        </div>
+
+        <div class="menu-btn logout" onclick="logoutUser()">
+            🚪 লগআউট
+        </div>
+
+    </div>
+
+    <script type="module" src="home.js"></script>
 </body>
+
 </html>
