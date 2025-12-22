@@ -1,57 +1,42 @@
-import { auth, db, storage } from "./firebase-config.js";
-import { ref, push, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-import { ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
-
 let selectedAmount = 0;
 
-const paymentNumbers = {
-    bKash: "01797632229",
-    Nagad: "01797632229",
-    Rocket: "01797632229"
+// আপনার ফিক্সড নাম্বার গুলো
+const numbers = {
+    "বিকাশ": "01797632229",
+    "নগদ": "01797632229",
+    "রকেট": "01797632229"
 };
 
-document.querySelectorAll(".amount-card").forEach(card => {
-    card.addEventListener("click", () => {
-        document.querySelectorAll(".amount-card").forEach(el => el.classList.remove("active"));
-        card.classList.add("active");
+document.querySelectorAll(".amount").forEach(btn => {
+    btn.addEventListener("click", () => {
 
-        selectedAmount = card.getAttribute("data-amount");
-        document.getElementById("selectedAmount").innerHTML = selectedAmount;
+        document.querySelectorAll(".amount").forEach(a => a.classList.remove("active"));
+        btn.classList.add("active");
+
+        selectedAmount = btn.dataset.amount;
+        document.getElementById("selectedAmountText").innerText = selectedAmount;
     });
 });
 
-document.getElementById("methodSelect").addEventListener("change", (e) => {
-    document.getElementById("selectedMethod").innerHTML = e.target.value;
-    document.getElementById("paymentNumber").innerHTML = paymentNumbers[e.target.value] || "";
-});
+window.startDeposit = () => {
+    
+    if (selectedAmount == 0) {
+        alert("দয়া করে একটি এমাউন্ট সিলেক্ট করুন");
+        return;
+    }
 
-window.makeDeposit = async () => {
+    const method = document.getElementById("method").value;
 
-    const method = document.getElementById("methodSelect").value;
-    const file = document.getElementById("screenshot").files[0];
+    const paymentNumber = numbers[method];
 
-    if (!selectedAmount) return alert("একটি Amount সিলেক্ট করুন!");
-    if (!method) return alert("একটি Method সিলেক্ট করুন!");
-    if (!file) return alert("স্ক্রিনশট আপলোড করুন!");
+    alert(`
+আপনি ${method} এর মাধ্যমে ${selectedAmount} টাকা ডিপোজিট করতে যাচ্ছেন।
 
-    const uid = auth.currentUser?.uid;
-    if (!uid) return alert("প্রথমে লগইন করুন!");
+📌 পেমেন্ট নাম্বার:
+${paymentNumber}
 
-    const storeRef = sRef(storage, "depositScreenshots/" + Date.now() + ".jpg");
-    const uploadResult = await uploadBytes(storeRef, file);
-    const imageURL = await getDownloadURL(uploadResult.ref);
+টাকা পাঠানোর পরে স্ক্রিনশট আপলোড করুন।
+    `);
 
-    const depositRef = push(ref(db, "depositRequests"));
-
-    await set(depositRef, {
-        uid,
-        amount: selectedAmount,
-        method,
-        paymentNumber: paymentNumbers[method],
-        screenshot: imageURL,
-        status: "pending",
-        time: new Date().toLocaleString()
-    });
-
-    alert("ডিপোজিট সফলভাবে সাবমিট হয়েছে ✔\nঅনুগ্রহ করে Admin approval এর জন্য অপেক্ষা করুন।");
+    // Future: screenshot system & firebase insert
 };
