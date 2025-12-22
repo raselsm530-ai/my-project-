@@ -1,51 +1,41 @@
 import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { createUserWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { set, ref } 
+from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-window.register = async () => {
+window.register = function () {
+    const phone = document.getElementById("phone").value;
+    const password = document.getElementById("password").value;
+    const cpassword = document.getElementById("cpassword").value;
+    const pin = document.getElementById("pin").value;
+    const refer = document.getElementById("refer").value;
 
-    const phone = document.getElementById("phone").value.trim();
-    const pass = document.getElementById("password").value.trim();
-    const cpass = document.getElementById("cpassword").value.trim();
-    const pin = document.getElementById("pin").value.trim();
-    const refer = document.getElementById("refer").value.trim();
-
-    // ================= VALIDATION =================
-    if (!phone || !pass || !cpass || !pin) {
-        alert("সব ঘর পূরণ করুন");
+    if (!phone || !password || !cpassword || !pin) {
+        alert("সব ঘর পূরণ করুন!");
         return;
     }
 
-    if (pass !== cpass) {
-        alert("পাসওয়ার্ড মিলছে না");
+    if (password !== cpassword) {
+        alert("পাসওয়ার্ড মেলেনি!");
         return;
     }
 
-    if (pin.length !== 4) {
-        alert("উইথড্র পিন ৪ সংখ্যা হতে হবে");
-        return;
-    }
+    createUserWithEmailAndPassword(auth, `${phone}@gmail.com`, password)
+        .then(userCredential => {
+            const uid = userCredential.user.uid;
 
-    // Firebase email trick
-    const email = phone + "@app.com";
+            set(ref(db, "users/" + uid), {
+                phone,
+                pin,
+                refer,
+                balance: 0
+            });
 
-    try {
-        // ================= CREATE USER =================
-        await createUserWithEmailAndPassword(auth, email, pass);
-
-        // ================= SAVE USER DATA =================
-        await set(ref(db, "users/" + phone), {
-            phone: phone,
-            balance: 0,
-            pin: pin,
-            refer: refer || "",
-            joined: new Date().toLocaleString()
+            alert("রেজিস্ট্রেশন সফল!");
+            window.location.href = "login.html";
+        })
+        .catch(err => {
+            alert("ত্রুটি: " + err.message);
         });
-
-        alert("রেজিস্ট্রেশন সফল 🎉");
-        location.href = "login.html";
-
-    } catch (err) {
-        alert("⚠️ রেজিস্ট্রেশন ব্যর্থ: " + err.message);
-    }
-};
+}
