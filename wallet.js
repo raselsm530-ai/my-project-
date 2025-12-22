@@ -1,87 +1,37 @@
-import { db } from "./firebase-config.js";
-import { ref, push } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
-
-const fixedNumbers = {
-    bkash: "01797632229",
-    nagad: "01797632229",
-    rocket: "01797632229"
-};
+const fixedNumber = "01797632229";
 
 let selectedAmount = 0;
-let selectedMethod = "";
 
-window.selectAmount = (amount) => {
+function selectAmount(amount) {
     selectedAmount = amount;
+    document.getElementById("paymentMethod").value = "bkash"; // Default method auto
+    alert(amount + " টাকা সিলেক্ট হয়েছে। পেমেন্ট মেথড Bkash সিলেক্ট করা হয়েছে।");
+}
 
-    // যদি method আগে সিলেক্ট না করে
-    if (!selectedMethod) {
-        const methods = Object.keys(fixedNumbers);
-        selectedMethod = methods[Math.floor(Math.random() * methods.length)];
-    }
+function depositMoney() {
+    const method = document.getElementById("paymentMethod").value;
+    const trxid = document.getElementById("trxid").value.trim();
+    const user = localStorage.getItem("currentUser");
 
-    // UI update
-    Object.keys(fixedNumbers).forEach(m => {
-        const el = document.getElementById(m);
-        if (m === selectedMethod) el.classList.add("active");
-        else el.classList.remove("active");
-    });
+    if (!user) { alert("লগইন করুন!"); return; }
+    if (!selectedAmount || !method || !trxid) { alert("সব তথ্য দিন!"); return; }
 
-    document.getElementById("paymentNumber").innerText = fixedNumbers[selectedMethod];
-};
-
-window.selectMethod = (method) => {
-    selectedMethod = method;
-
-    // Highlight selected
-    Object.keys(fixedNumbers).forEach(m => {
-        const el = document.getElementById(m);
-        if (m === method) el.classList.add("active");
-        else el.classList.remove("active");
-    });
-
-    if (selectedAmount) {
-        document.getElementById("paymentNumber").innerText = fixedNumbers[selectedMethod];
-    }
-};
-
-window.depositMoney = async () => {
-    const userPhone = localStorage.getItem("user");
-    if (!userPhone) {
-        alert("লগইন করুন!");
-        return;
-    }
-
-    if (!selectedAmount) {
-        alert("Amount নির্বাচন করুন!");
-        return;
-    }
-
-    if (!selectedMethod) {
-        alert("Payment Method নির্বাচন করুন!");
-        return;
-    }
-
-    const depositData = {
-        user: userPhone,
+    const deposit = {
+        user: user,
         amount: selectedAmount,
-        method: selectedMethod,
-        number: fixedNumbers[selectedMethod],
+        method: method,
+        number: fixedNumber,
+        trxid: trxid,
         status: "pending",
         date: new Date().toLocaleString()
     };
 
-    try {
-        const depositsRef = ref(db, "pendingDeposits");
-        await push(depositsRef, depositData);
+    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
+    pending.push(deposit);
+    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
-        alert(`ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে: ${selectedAmount} ৳ (${selectedMethod})`);
-
-        // Reset
-        selectedAmount = 0;
-        selectedMethod = "";
-        document.getElementById("paymentNumber").innerText = "Amount ক্লিক করুন";
-        Object.keys(fixedNumbers).forEach(m => document.getElementById(m).classList.remove("active"));
-    } catch (err) {
-        alert("Error: " + err.message);
-    }
-};
+    alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে (Pending)");
+    selectedAmount = 0;
+    document.getElementById("trxid").value = "";
+    document.getElementById("paymentMethod").value = "";
+}        
