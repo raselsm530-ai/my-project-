@@ -1,0 +1,51 @@
+// register.js
+import { auth, db } from "./firebase-config.js";
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
+import { ref, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
+
+window.register = () => {
+    const phone = document.getElementById("phone").value.trim();
+    const password = document.getElementById("password").value.trim();
+    const confirm = document.getElementById("cpassword").value.trim();
+    const pin = document.getElementById("pin").value.trim();
+    const refer = document.getElementById("refer").value.trim() || "NO-REF";
+
+    if (!phone || !password || !confirm || !pin) {
+        alert("সব ঘর পূরণ করুন");
+        return;
+    }
+
+    if (phone.length !== 11 || !phone.startsWith("01")) {
+        alert("সঠিক মোবাইল নম্বর দিন");
+        return;
+    }
+
+    if (password !== confirm) {
+        alert("পাসওয়ার্ড মিলছে না");
+        return;
+    }
+
+    if (pin.length !== 4) {
+        alert("৪ সংখ্যার পিন দিন");
+        return;
+    }
+
+    const email = phone + "@app.com";
+
+    createUserWithEmailAndPassword(auth, email, password)
+        .then(userCred => {
+            // Firebase DB তে user data save
+            set(ref(db, "users/" + phone), {
+                phone,
+                balance: 0,
+                withdrawPin: pin,
+                refCode: refer,
+                joined: new Date().toLocaleString()
+            });
+            alert("রেজিস্ট্রেশন সফল 👍 লগইন করুন");
+            location.href = "login.html";
+        })
+        .catch(err => {
+            alert("Error: " + err.message);
+        });
+};
