@@ -1,37 +1,44 @@
-const fixedNumber = "01797632229";
-
 let selectedAmount = 0;
 
-function selectAmount(amount) {
-    selectedAmount = amount;
-    document.getElementById("paymentMethod").value = "bkash"; // Default method auto
-    alert(amount + " টাকা সিলেক্ট হয়েছে। পেমেন্ট মেথড Bkash সিলেক্ট করা হয়েছে।");
-}
+const paymentNumbers = {
+    bKash: "01797632229",
+    Nagad: "01797632229",
+    Rocket: "01797632229"
+};
 
-function depositMoney() {
-    const method = document.getElementById("paymentMethod").value;
-    const trxid = document.getElementById("trxid").value.trim();
-    const user = localStorage.getItem("currentUser");
+document.querySelectorAll(".amount-card").forEach(card => {
+    card.addEventListener("click", () => {
 
-    if (!user) { alert("লগইন করুন!"); return; }
-    if (!selectedAmount || !method || !trxid) { alert("সব তথ্য দিন!"); return; }
+        document.querySelectorAll(".amount-card")
+            .forEach(el => el.classList.remove("active"));
 
-    const deposit = {
-        user: user,
-        amount: selectedAmount,
-        method: method,
-        number: fixedNumber,
-        trxid: trxid,
-        status: "pending",
-        date: new Date().toLocaleString()
-    };
+        card.classList.add("active");
 
-    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
-    pending.push(deposit);
-    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
+        selectedAmount = card.getAttribute("data-amount");
 
-    alert("ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে (Pending)");
-    selectedAmount = 0;
-    document.getElementById("trxid").value = "";
-    document.getElementById("paymentMethod").value = "";
-}        
+        document.getElementById("selectedAmount").innerText = selectedAmount;
+    });
+});
+
+document.getElementById("methodSelect").addEventListener("change", (e) => {
+    document.getElementById("selectedMethod").innerText = e.target.value;
+});
+
+window.makeDeposit = () => {
+
+    if (selectedAmount == 0) {
+        alert("অনুগ্রহ করে একটি অ্যামাউন্ট সিলেক্ট করুন!");
+        return;
+    }
+
+    const method = document.getElementById("selectedMethod").innerText;
+    const number = paymentNumbers[method];
+
+    alert(
+        `ডিপোজিট তথ্য\n\n` +
+        `Amount: ৳${selectedAmount}\n` +
+        `Method: ${method}\n` +
+        `Send Money To: ${number}\n\n` +
+        `টাকা পাঠানোর পর স্ক্রিনশট জমা দিন।`
+    );
+};
