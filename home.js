@@ -1,22 +1,16 @@
-window.onload = function () {
-    const user = localStorage.getItem("currentUser");
-    if (!user) {
-        alert("লগইন করুন!");
+window.onload = () => {
+    const user = localStorage.getItem("user");
+
+    if(!user){
         location.href = "login.html";
-        return;
     }
 
-    document.getElementById("welcomeText").textContent = "স্বাগতম, " + user;
+    document.getElementById("welcomeUser").innerText = "স্বাগতম " + user;
 
-    let users = JSON.parse(localStorage.getItem("users")) || [];
-    let data = users.find(u => u.phone === user);
-
-    let balance = data ? data.balance : 0;
-    document.getElementById("balance").textContent = balance + " ৳";
+    // later firebase balance দেখানোর কোড যোগ হবে
 };
 
-function logoutUser() {
-    localStorage.removeItem("currentUser");
-    alert("লগআউট সম্পন্ন হয়েছে");
-    window.location.href = "login.html";
-}
+window.logoutUser = () => {
+    localStorage.removeItem("user");
+    location.href = "login.html";
+};
