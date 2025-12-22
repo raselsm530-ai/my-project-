@@ -1,8 +1,8 @@
 import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+import { ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-window.register = () => {
+window.register = async () => {
 
     const phone = document.getElementById("phone").value.trim();
     const pass = document.getElementById("password").value.trim();
@@ -10,40 +10,42 @@ window.register = () => {
     const pin = document.getElementById("pin").value.trim();
     const refer = document.getElementById("refer").value.trim();
 
-    if (phone === "" || pass === "" || cpass === "" || pin === "") {
-        alert("⚠ সব ঘর পূরণ করুন");
+    // ================= VALIDATION =================
+    if (!phone || !pass || !cpass || !pin) {
+        alert("সব ঘর পূরণ করুন");
         return;
     }
 
     if (pass !== cpass) {
-        alert("❌ পাসওয়ার্ড মিলছে না");
+        alert("পাসওয়ার্ড মিলছে না");
         return;
     }
 
     if (pin.length !== 4) {
-        alert("❌ পিন অবশ্যই ৪ ডিজিট হতে হবে");
+        alert("উইথড্র পিন ৪ সংখ্যা হতে হবে");
         return;
     }
 
+    // Firebase email trick
     const email = phone + "@app.com";
 
-    createUserWithEmailAndPassword(auth, email, pass)
-        .then(() => {
+    try {
+        // ================= CREATE USER =================
+        await createUserWithEmailAndPassword(auth, email, pass);
 
-            set(ref(db, "users/" + phone), {
-                phone,
-                password: pass,
-                pin,
-                refer: refer || "NONE",
-                balance: 0,
-                joined: new Date().toLocaleString()
-            });
-
-            alert("🎉 রেজিস্ট্রেশন সফল!");
-
-            location.href = "login.html";
-        })
-        .catch(err => {
-            alert("❌ " + err.message);
+        // ================= SAVE USER DATA =================
+        await set(ref(db, "users/" + phone), {
+            phone: phone,
+            balance: 0,
+            pin: pin,
+            refer: refer || "",
+            joined: new Date().toLocaleString()
         });
+
+        alert("রেজিস্ট্রেশন সফল 🎉");
+        location.href = "login.html";
+
+    } catch (err) {
+        alert("⚠️ রেজিস্ট্রেশন ব্যর্থ: " + err.message);
+    }
 };
