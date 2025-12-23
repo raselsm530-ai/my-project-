@@ -5,24 +5,53 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Register</title>
 
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="auth.css">
+<style>
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(135deg,#4facfe,#00f2fe);
+  font-family:sans-serif;
+}
+.box{
+  background:#fff;
+  padding:25px;
+  width:90%;
+  max-width:350px;
+  border-radius:12px;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+}
+h2{text-align:center;color:#333}
+input,button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:8px;
+  border:1px solid #ccc;
+  font-size:15px;
+}
+button{
+  background:#4facfe;
+  color:#fff;
+  border:none;
+  font-weight:bold;
+}
+</style>
 </head>
 
-<body class="auth-bg">
+<body>
 
-<div class="auth-box">
-    <h2>রেজিস্ট্রেশন</h2>
+<div class="box">
+  <h2>Register</h2>
 
-    <form id="registerForm">
-        <input type="tel" id="phone" placeholder="মোবাইল নাম্বার" required>
-        <input type="password" id="password" placeholder="পাসওয়ার্ড" required>
-        <input type="password" id="cpassword" placeholder="কনফার্ম পাসওয়ার্ড" required>
+  <input id="phone" type="text" placeholder="Phone Number">
+  <input id="password" type="password" placeholder="Password">
+  <input id="confirm" type="password" placeholder="Confirm Password">
 
-        <button type="submit">রেজিস্টার</button>
-    </form>
-
-    <p>আগেই অ্যাকাউন্ট আছে? <a href="login.html">লগইন</a></p>
+  <!-- ⚠️ type=button খুব গুরুত্বপূর্ণ -->
+  <button type="button" id="registerBtn">Register</button>
 </div>
 
 <script type="module" src="register.js"></script>
