@@ -3,127 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>হোম</title>
+<title>Home</title>
 <link rel="stylesheet" href="style.css">
 <style>
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg,#667eea,#764ba2);
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    color: #fff;
-}
-.header {
-    width: 100%;
-    max-width: 420px;
-    text-align: center;
-    margin-bottom: 20px;
-}
-.balance-box {
-    background: #eef2ff;
-    color: #1e40af;
-    padding: 20px;
-    width: 100%;
-    border-radius: 18px;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 20px;
-    font-weight: bold;
-}
-.button-grid {
-    display: grid;
-    grid-template-columns: repeat(2,1fr);
-    gap: 14px;
-    width: 100%;
-    max-width: 420px;
-    margin-bottom: 20px;
-}
-.button-grid button {
-    padding: 18px 0;
-    border: none;
-    border-radius: 16px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    color: #fff;
-    background: linear-gradient(135deg,#4B7BFF,#6A5BFF);
-    transition: transform 0.15s, box-shadow 0.15s;
-}
-.button-grid button:active {
-    transform: scale(0.96);
-}
-.deposit-history {
-    width: 100%;
-    max-width: 420px;
-    background: #fff;
-    border-radius: 16px;
-    padding: 16px;
-    color: #000;
-    box-shadow: 0 6px 18px rgba(0,0,0,0.1);
-}
-.deposit-history table {
-    width: 100%;
-    border-collapse: collapse;
-}
-.deposit-history th, .deposit-history td {
-    padding: 8px;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: center;
-    font-size: 14px;
-}
-.deposit-history th { background: #4B7BFF; color: #fff; }
-.logout-btn {
-    margin-top: 10px;
-    padding: 14px;
-    width: 100%;
-    max-width: 420px;
-    border: none;
-    border-radius: 16px;
-    background: #ef4444;
-    color: #fff;
-    font-weight: bold;
-    cursor: pointer;
-}
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        min-height: 100vh;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 400px;
+        background: #fff;
+        color: #1f2937;
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    button {
+        padding: 14px 20px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #4B7BFF, #6A5BFF);
+        color: #fff;
+        cursor: pointer;
+        margin: 8px;
+        font-size: 16px;
+    }
+
+    button:hover {
+        opacity: 0.9;
+    }
+
+    h2 {
+        margin-bottom: 20px;
+    }
+
+    p {
+        font-size: 18px;
+        margin: 12px 0;
+    }
 </style>
 </head>
 <body>
-<div class="header">
-    <h2>স্বাগতম</h2>
-</div>
 
-<div class="balance-box">
-    ব্যালেন্স: ৳<span id="balance">0</span>
+<div class="card">
+    <h2>Welcome, <span id="username"></span></h2>
+    <p>Balance: <span id="balance">0</span> ৳</p>
+    <button onclick="goToWallet()">Wallet</button>
+    <button onclick="goToPackages()">Packages</button>
+    <button onclick="logout()">Logout</button>
 </div>
-
-<div class="button-grid">
-    <button onclick="location.href='wallet.html'">ওয়ালেট</button>
-    <button onclick="alert('প্যাকেজ ফিচার আসছে')">প্যাকেজ</button>
-    <button onclick="alert('উইথড্র ফিচার আসছে')">উইথড্র</button>
-</div>
-
-<div class="deposit-history">
-    <h3>Deposit History</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Amount</th>
-                <th>Method</th>
-                <th>Status</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody id="depositTable">
-            <!-- Deposit history will appear here -->
-        </tbody>
-    </table>
-</div>
-
-<button class="logout-btn" onclick="logout()">লগ আউট</button>
 
 <script type="module" src="home.js"></script>
 </body>
