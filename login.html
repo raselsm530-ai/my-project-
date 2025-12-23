@@ -3,13 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
+<title>লগইন</title>
+<link rel="stylesheet" href="style.css">
 <style>
-body{margin:0;font-family:sans-serif;background:#667eea;display:flex;justify-content:center;align-items:center;height:100vh;}
-.login-box{background:#f5f7ff;padding:30px;border-radius:15px;width:90%;max-width:400px;text-align:center;box-shadow:0 6px 18px rgba(0,0,0,0.12);}
-.login-box input{width:100%;padding:12px;margin:8px 0;border-radius:10px;border:1px solid #ccc;}
-.login-box button{width:100%;padding:14px;margin-top:12px;background:#4B7BFF;color:white;border:none;border-radius:10px;cursor:pointer;}
-.login-box a{color:#4B7BFF;text-decoration:none;}
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea, #764ba2);
+}
+.login-box {
+    width: 92%;
+    max-width: 420px;
+    background: #f5f7ff;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    text-align: center;
+}
+.login-box input, .login-box button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+.login-box input {
+    border: 1px solid #ccc;
+}
+.login-box button {
+    background: linear-gradient(135deg, #4B7BFF, #6A5BFF);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+}
+.login-box button:hover {
+    opacity: 0.9;
+}
+.login-box p {
+    margin-top: 15px;
+    font-size: 14px;
+}
+.login-box a {
+    color: #4B7BFF;
+    text-decoration: none;
+    font-weight: bold;
+}
 </style>
 </head>
 <body>
@@ -17,43 +59,11 @@ body{margin:0;font-family:sans-serif;background:#667eea;display:flex;justify-con
 <h2>লগইন</h2>
 <input type="tel" id="phone" placeholder="মোবাইল নাম্বার">
 <input type="password" id="password" placeholder="পাসওয়ার্ড">
-<button type="button" onclick="loginUser()">লগইন</button>
-<p>নতুন ইউজার? <a href="register.html">রেজিস্টার</a></p>
+<button onclick="login()">লগইন</button>
+<p>New User? <a href="register.html">Register</a></p>
 </div>
 
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCH_qTmU7QIUC4RKoYEX7QaXpPUNSN8mBI",
-  authDomain: "smart-earning-platform-bd.firebaseapp.com",
-  databaseURL: "https://smart-earning-platform-bd-default-rtdb.firebaseio.com",
-  projectId: "smart-earning-platform-bd",
-  storageBucket: "smart-earning-platform-bd.appspot.com",
-  messagingSenderId: "1076796437288",
-  appId: "1:1076796437288:web:b6a6497cf4795dc3c0561d"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-
-window.loginUser = () => {
-  const phone = document.getElementById("phone").value.trim();
-  const password = document.getElementById("password").value.trim();
-  if(!phone || !password){ alert("সব ঘর পূরণ করুন"); return; }
-  const email = phone+"@app.com";
-
-  signInWithEmailAndPassword(auth,email,password)
-    .then(userCredential => {
-      localStorage.setItem("currentUser",phone);
-      alert("লগইন সফল!");
-      location.href="home.html";
-    })
-    .catch(error=>{
-      alert("লগইন ব্যর্থ: ভুল নম্বর বা পাসওয়ার্ড");
-    });
-}
-</script>
+<script type="module" src="firebase-config.js"></script>
+<script type="module" src="login.js"></script>
 </body>
 </html>
