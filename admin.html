@@ -1,84 +1,93 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f0f4f7;
-            margin: 0;
-            padding: 0;
-        }
-        .container {
-            width: 95%;
-            max-width: 1000px;
-            margin: 30px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        table, th, td {
-            border: 1px solid #ccc;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel</title>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(135deg, #4B7BFF, #8E54E9);
+        min-height: 100vh;
+        padding: 20px;
+        color: #1f2937;
+    }
+    h2 {
+        text-align: center;
+        color: #fff;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    th, td {
+        padding: 12px;
+        text-align: center;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 14px;
+    }
+    th {
+        background: #4B7BFF;
+        color: #fff;
+    }
+    tr:last-child td {
+        border-bottom: none;
+    }
+    button {
+        padding: 8px 12px;
+        margin: 2px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .approve {
+        background: #10b981;
+        color: #fff;
+    }
+    .reject {
+        background: #ef4444;
+        color: #fff;
+    }
+    @media(max-width: 600px) {
         th, td {
-            padding: 12px;
-            text-align: center;
-        }
-        th {
-            background: #4B7BFF;
-            color: #fff;
+            font-size: 12px;
+            padding: 8px;
         }
         button {
-            padding: 8px 14px;
-            margin: 2px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            color: #fff;
+            padding: 6px 10px;
+            font-size: 12px;
         }
-        button.approve {
-            background: #10b981;
-        }
-        button.reject {
-            background: #ef4444;
-        }
-    </style>
+    }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <h2>Pending Deposits</h2>
-    <table id="pendingTable">
-        <thead>
-            <tr>
-                <th>User</th>
-                <th>Amount</th>
-                <th>Method</th>
-                <th>Transaction ID</th>
-                <th>Date</th>
-                <th>Status</th>
-                <th>Screenshot</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Pending deposits will load here -->
-        </tbody>
-    </table>
-</div>
+<h2>Pending Deposits</h2>
+
+<table id="pendingTable">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Transaction ID</th>
+            <th>Date</th>
+            <th>Status</th>
+            <th>Screenshot</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- Pending deposits loaded here -->
+    </tbody>
+</table>
 
 <script type="module" src="admin.js"></script>
 </body>
