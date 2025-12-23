@@ -18,17 +18,21 @@ registerBtn.addEventListener("click", () => {
         return;
     }
 
-    const email = phone + "@smartplatform.com";
+    const email = phone + "@smartplatform.com"; // ফোন নাম্বার দিয়ে Email ফেক করে ব্যবহার
 
     createUserWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
             const user = userCredential.user;
+
             set(ref(db, "users/" + phone), {
                 phone,
                 balance: 0
             });
+
             localStorage.setItem("loggedInUser", phone);
             alert("রেজিস্টার সফল 🎉");
+
+            // হোম পেজে রিডাইরেক্ট
             window.location.href = "home.html";
         })
         .catch(err => {
