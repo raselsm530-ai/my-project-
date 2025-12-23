@@ -1,34 +1,28 @@
 import { auth, db } from "./firebase-config.js";
-import { createUserWithEmailAndPassword } 
+import { createUserWithEmailAndPassword }
 from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-import { ref, set } 
+import { ref, set }
 from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-window.register = async function () {
+const form = document.getElementById("registerForm");
+
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
 
     const phone = document.getElementById("phone").value.trim();
     const pass = document.getElementById("password").value.trim();
     const cpass = document.getElementById("cpassword").value.trim();
 
-    if (!phone || !pass || !cpass) {
-        alert("সব ঘর পূরণ করুন");
-        return;
-    }
-
     if (pass !== cpass) {
-        alert("পাসওয়ার্ড মিলেনি");
+        alert("পাসওয়ার্ড মিলেনি");
         return;
     }
 
-    if (phone.length < 10) {
-        alert("সঠিক নাম্বার দিন");
-        return;
-    }
-
+    // phone → email trick
     const email = phone + "@app.com";
 
     try {
-        const userCred = await createUserWithEmailAndPassword(auth, email, pass);
+        await createUserWithEmailAndPassword(auth, email, pass);
 
         await set(ref(db, "users/" + phone), {
             phone: phone,
@@ -37,13 +31,9 @@ window.register = async function () {
         });
 
         alert("রেজিস্ট্রেশন সফল ✅");
-        window.location.href = "login.html";
+        location.href = "login.html";
 
     } catch (err) {
-        if (err.code === "auth/email-already-in-use") {
-            alert("এই নাম্বার দিয়ে আগে রেজিস্টার করা হয়েছে");
-        } else {
-            alert(err.message);
-        }
+        alert(err.message);
     }
-};
+});
