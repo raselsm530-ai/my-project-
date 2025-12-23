@@ -2,7 +2,9 @@ import { auth, db } from "./firebase-config.js";
 import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { ref, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-window.registerUser = () => {
+const registerBtn = document.getElementById("registerBtn");
+
+registerBtn.addEventListener("click", () => {
     const phone = document.getElementById("phone").value.trim();
     const pass = document.getElementById("password").value.trim();
     const cpass = document.getElementById("cpassword").value.trim();
@@ -16,7 +18,7 @@ window.registerUser = () => {
         return;
     }
 
-    const email = phone + "@smartplatform.com"; // fake email
+    const email = phone + "@smartplatform.com";
 
     createUserWithEmailAndPassword(auth, email, pass)
         .then((userCredential) => {
@@ -36,4 +38,4 @@ window.registerUser = () => {
                 alert("Error: " + err.message);
             }
         });
-}
+});
