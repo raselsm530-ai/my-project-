@@ -6,30 +6,20 @@ window.register = () => {
     const phone = document.getElementById("phone").value.trim();
     const pass = document.getElementById("password").value.trim();
     const cpass = document.getElementById("cpassword").value.trim();
-
-    if(!phone || !pass || !cpass) {
-        alert("সব ঘর পূরণ করুন");
-        return;
-    }
-
-    if(pass !== cpass) {
-        alert("পাসওয়ার্ড মেলেনি");
-        return;
-    }
+    if (!phone || !pass || !cpass) return alert("সব ঘর পূরণ করুন");
+    if(pass !== cpass) return alert("Password মিলছে না");
 
     const email = phone + "@app.com";
 
     createUserWithEmailAndPassword(auth, email, pass)
-        .then(user => {
-            set(ref(db, "users/" + phone), {
-                phone,
-                balance: 0,
-                joined: new Date().toLocaleString()
-            });
-            alert("রেজিস্ট্রেশন সফল 👍");
-            location.href = "login.html";
-        })
-        .catch(err => {
-            alert("Error: " + err.message);
+    .then(user => {
+        set(ref(db, "users/" + phone), {
+            phone,
+            balance: 0,
+            joined: new Date().toLocaleString()
         });
+        alert("রেজিস্ট্রেশন সফল 👍");
+        location.href = "login.html";
+    })
+    .catch(err => alert(err.message));
 };
