@@ -1,11 +1,3 @@
- import { getDatabase, ref, push, set } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-database.js";
-import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-storage.js";
-import { app } from "./firebase-config.js";
-
-// Firebase instances
-const db = getDatabase(app);
-const storage = getStorage(app);
-
 // ===== FIXED PAYMENT NUMBERS =====
 const fixedNumbers = {
     bkash: "01797632229",
@@ -15,45 +7,47 @@ const fixedNumbers = {
 
 // ===== SHOW NUMBER =====
 function updateNumber() {
-    const method = document.getElementById("method").value;
-    const box = document.getElementById("paymentNumber");
+    const method = document.getElementById("paymentMethod").value;
+    const box = document.getElementById("fixedNumberText");
 
     if (!method) {
-        box.innerHTML = "মেথড নির্বাচন করুন";
+        box.innerHTML = "01797632229";
         return;
     }
 
-    box.innerHTML = `
-        <div class="fixed-number">
-            <span id="fixedNumberText">${fixedNumbers[method]}</span>
-            <button class="copy-btn" onclick="copyNumber()">কপি</button>
-        </div>
-    `;
+    box.innerText = fixedNumbers[method];
 }
 
 // ===== COPY NUMBER =====
 function copyNumber() {
     const text = document.getElementById("fixedNumberText").innerText;
-    navigator.clipboard.writeText(text).then(() => {
-        alert("✅ নাম্বার কপি হয়েছে\nবিকাশ / নগদ অ্যাপে Paste করুন");
-    });
+
+    const temp = document.createElement("input");
+    temp.value = text;
+    document.body.appendChild(temp);
+
+    temp.select();
+    temp.setSelectionRange(0, 99999);
+    document.execCommand("copy");
+
+    document.body.removeChild(temp);
+    alert("✅ নাম্বার কপি হয়েছে\nবিকাশ / নগদ অ্যাপে Paste করুন");
 }
 
-// ===== SELECT AMOUNT BUTTON =====
-window.selectAmount = (amount) => {
-    document.getElementById("depositAmount").value = amount;
+// ===== SELECT AMOUNT =====
+function selectAmount(amount) {
     document.getElementById("showAmount").innerText = amount;
+    document.getElementById("depositAmount").value = amount;
 }
 
-// ===== SUBMIT DEPOSIT =====
-window.submitDeposit = async () => {
-    const amount = document.getElementById("depositAmount").value;
-    const method = document.getElementById("method").value;
+// ===== DEPOSIT REQUEST =====
+function submitDeposit() {
+    const amount = document.getElementById("showAmount").innerText;
+    const method = document.getElementById("paymentMethod").value;
     const trxid = document.getElementById("trxid").value || "N/A";
-    const screenshot = document.getElementById("screenshot").files[0];
 
     if (!amount || !method) {
-        alert("এমাউন্ট ও মেথড নির্বাচন করুন");
+        alert("এমাউন্ট ও মেথড দিন");
         return;
     }
 
@@ -63,29 +57,22 @@ window.submitDeposit = async () => {
         return;
     }
 
-    let screenshotURL = "";
-    if (screenshot) {
-        const storageRef = sRef(storage, `deposits/${user}_${Date.now()}_${screenshot.name}`);
-        await uploadBytes(storageRef, screenshot);
-        screenshotURL = await getDownloadURL(storageRef);
-    }
-
-    // Save deposit request in Firebase Realtime Database
-    const depositRef = push(ref(db, "deposits"));
-    await set(depositRef, {
+    const deposit = {
         user,
         amount: Number(amount),
         method,
         number: fixedNumbers[method],
         trxid,
-        screenshot: screenshotURL,
         status: "pending",
         date: new Date().toLocaleString()
-    });
+    };
+
+    let pending = JSON.parse(localStorage.getItem("pendingDeposits")) || [];
+    pending.push(deposit);
+    localStorage.setItem("pendingDeposits", JSON.stringify(pending));
 
     alert("✅ ডিপোজিট রিকোয়েস্ট পাঠানো হয়েছে");
-    document.getElementById("depositAmount").value = "";
+
+    document.getElementById("showAmount").innerText = "0";
     document.getElementById("trxid").value = "";
-    document.getElementById("screenshot").value = "";
-    document.getElementById("showAmount").innerText = 0;
-};   
+}         
