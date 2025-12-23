@@ -8,7 +8,13 @@ window.selectAmount = (amt) => {
   selectedAmount = amt;
   document.getElementById("showAmount").innerText = amt;
 };
+function copyNumber() {
+    const number = document.getElementById("fixedNumberText").innerText;
 
+    navigator.clipboard.writeText(number).then(() => {
+        alert("নাম্বার কপি হয়েছে ✅ এখন বিকাশ/নগদ অ্যাপে পেস্ট করুন");
+    });
+}
 window.submitDeposit = async () => {
 
   const method = document.getElementById("method").value;
