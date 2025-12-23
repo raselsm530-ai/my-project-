@@ -19,7 +19,6 @@ function registerUser(){
     return;
   }
 
-  // ফোনকে ইমেইলে কনভার্ট (Firebase এর জন্য)
   const fakeEmail = phone + "@user.com";
 
   createUserWithEmailAndPassword(auth, fakeEmail, pass)
