@@ -1,58 +1,49 @@
 import { db } from "./firebase-config.js";
 import { ref, onValue, get, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
-// Admin login check
-if(localStorage.getItem("adminLogged") !== "true") {
-    location.href = "admin-login.html";
-}
-
-// Load pending deposits
 const tableBody = document.querySelector("#pendingTable tbody");
 
-const depositsRef = ref(db, "deposits");
-onValue(depositsRef, snapshot => {
-    const data = snapshot.val();
-    tableBody.innerHTML = "";
-    if(!data) return;
-    Object.keys(data).forEach(key => {
-        const dep = data[key];
-        if(dep.status !== "pending") return;
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-            <td>${dep.user}</td>
-            <td>${dep.amount} ৳</td>
-            <td>${dep.method}</td>
-            <td>${dep.trxid}</td>
-            <td>${dep.date}</td>
-            <td>${dep.status}</td>
-            <td>${dep.screenshot ? `<a href="${dep.screenshot}" target="_blank">View</a>`:"N/A"}</td>
-            <td>
-                <button class="approve" onclick="approveDeposit('${key}')">Approve</button>
-                <button class="reject" onclick="rejectDeposit('${key}')">Reject</button>
-            </td>
-        `;
-        tableBody.appendChild(tr);
+window.loadPending = () => {
+    tableBody.innerHTML="";
+    onValue(ref(db, "deposits"), snapshot => {
+        const data = snapshot.val();
+        if(!data) return;
+        Object.keys(data).forEach(key=>{
+            const dep = data[key];
+            if(dep.status !== "pending") return;
+            const tr = document.createElement("tr");
+            tr.innerHTML=`
+                <td>${dep.user}</td>
+                <td>${dep.amount}</td>
+                <td>${dep.method}</td>
+                <td>${dep.trxid}</td>
+                <td>${dep.date}</td>
+                <td>${dep.status}</td>
+                <td>${dep.screenshot ? `<a href="${dep.screenshot}" target="_blank">View</a>`:"N/A"}</td>
+                <td>
+                    <button onclick="approveDeposit('${key}')">Approve</button>
+                    <button onclick="rejectDeposit('${key}')">Reject</button>
+                </td>
+            `;
+            tableBody.appendChild(tr);
+        });
     });
-});
+};
 
-// Approve deposit
-window.approveDeposit = async function(key){
-    const depositRef = ref(db, `deposits/${key}`);
-    const snapshot = await get(depositRef);
-    const dep = snapshot.val();
-    if(!dep) return;
-    const userRef = ref(db, `users/${dep.user}`);
-    const userSnap = await get(userRef);
+window.approveDeposit = async (key) => {
+    const depositSnap = await get(ref(db, `deposits/${key}`));
+    const dep = depositSnap.val();
+    const userSnap = await get(ref(db, `users/${dep.user}`));
     const userData = userSnap.val() || {balance:0};
-    const newBalance = Number(userData.balance) + Number(dep.amount);
-    await update(userRef, {balance:newBalance});
-    await update(depositRef, {status:"approved"});
-    alert(`Deposit Approved ✅\nNew Balance: ${newBalance} ৳`);
-}
+    const newBalance = Number(userData.balance)+Number(dep.amount);
+    await update(ref(db, `users/${dep.user}`), {balance:newBalance});
+    await update(ref(db, `deposits/${key}`), {status:"approved"});
+    alert(`Deposit Approved ✅ New Balance: ${newBalance}`);
+};
 
-// Reject deposit
-window.rejectDeposit = async function(key){
-    const depositRef = ref(db, `deposits/${key}`);
-    await update(depositRef, {status:"rejected"});
+window.rejectDeposit = (key) => {
+    update(ref(db, `deposits/${key}`), {status:"rejected"});
     alert("Deposit Rejected ❌");
-}
+};
+
+window.loadPending();
