@@ -7,13 +7,13 @@ window.register = () => {
     const password = document.getElementById("password").value.trim();
     const cpassword = document.getElementById("cpassword").value.trim();
 
-    if(!phone || !password || !cpassword) return alert("সব ঘর পূরণ করুন");
-    if(password !== cpassword) return alert("পাসওয়ার্ড মিলছে না");
+    if (!phone || !password || !cpassword) return alert("সব ঘর পূরণ করুন");
+    if (password !== cpassword) return alert("পাসওয়ার্ড মিলছে না");
 
     const email = phone + "@app.com";
 
     createUserWithEmailAndPassword(auth, email, password)
-    .then(userCred => {
+    .then(() => {
         set(ref(db, "users/" + phone), {
             phone: phone,
             balance: 0,
