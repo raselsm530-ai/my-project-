@@ -3,61 +3,34 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>হোম</title>
+<title>Home</title>
+
 <link rel="stylesheet" href="style.css">
-<style>
-body {
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-    margin: 0;
-    background: linear-gradient(135deg,#4B7BFF,#8E54E9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.home-container {
-    width: 92%;
-    max-width: 420px;
-    background: #fff;
-    border-radius: 18px;
-    padding: 25px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.2);
-    text-align: center;
-}
-.home-container h2 {
-    margin-bottom: 15px;
-    color: #1f2937;
-}
-.home-container p {
-    font-size: 18px;
-    color: #4B7BFF;
-    margin: 10px 0;
-}
-button {
-    width: 100%;
-    padding: 14px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 12px;
-    background: linear-gradient(135deg,#4B7BFF,#6A5BFF);
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-    font-weight: bold;
-}
-button:hover {opacity: 0.9;}
-</style>
+<link rel="stylesheet" href="home.css">
 </head>
-<body>
+
+<body class="home-bg">
+
 <div class="home-container">
-    <h2>স্বাগতম, <span id="username"></span></h2>
-    <p>ব্যালেন্স: <span id="balance">0</span> ৳</p>
-    <button onclick="goToWallet()">Wallet</button>
-    <button onclick="goToPackages()">Packages</button>
-    <button onclick="logout()">Logout</button>
+
+    <div class="home-header">
+        <h2>Smart Earning</h2>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <div class="balance-card">
+        <p>আপনার ব্যালেন্স</p>
+        <h1>৳ <span id="balance">0</span></h1>
+    </div>
+
+    <div class="menu-grid">
+        <button onclick="go('wallet.html')">💰 Wallet</button>
+        <button onclick="alert('Package coming soon')">📦 Package</button>
+        <button onclick="alert('Withdraw coming soon')">🏧 Withdraw</button>
+    </div>
+
 </div>
 
-<script type="module" src="firebase-config.js"></script>
 <script type="module" src="home.js"></script>
 </body>
 </html>
